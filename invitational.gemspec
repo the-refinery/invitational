@@ -7,11 +7,11 @@ require "invitational/version"
 Gem::Specification.new do |s|
   s.name        = "invitational"
   s.version     = Invitational::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Invitational."
-  s.description = "TODO: Description of Invitational."
+  s.authors     = ["Joe Fiorini", "Dave Goerlich"]
+  s.email       = ["joe@d-i.co", "dave@d-i.co"]
+  s.homepage    = "http://github.com/d-i/invitational"
+  s.summary     = "Manage users and the objects they belong to"
+  s.description = "See summary"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
@@ -20,4 +20,9 @@ Gem::Specification.new do |s|
   # s.add_dependency "jquery-rails"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "capybara", "~> 2.0.2"
+  s.add_development_dependency "combustion", "~> 0.3.1"
+  s.add_development_dependency "rspec", "~> 2.12.0"
+  s.add_development_dependency "rspec-rails", "~> 2.12.0"
+  s.add_development_dependency "rspec-given", "~> 2.3.0"
 end
