@@ -142,7 +142,7 @@ DEPENDENCIES
   invitational!
   jquery-rails
   rspec (~> 2.12.0)
-  rspec-given (~> 2.3.0)
+  rspec-given
   rspec-rails (~> 2.12.0)
   sprockets
   sqlite3

@@ -9,6 +9,7 @@ require 'invitational'
 Combustion.initialize! :active_record, :action_controller, :action_view, :sprockets
 
 require 'rspec/rails'
+require 'rspec-given'
 require 'capybara/rails'
 
 RSpec.configure do |config|

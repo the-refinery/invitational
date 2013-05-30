@@ -5,4 +5,9 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
+  create_table :entities, force: true do |t|
+    t.string :name
+    t.timestamps
+  end
+
 end
