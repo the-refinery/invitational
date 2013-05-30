@@ -1,19 +1,17 @@
 require 'rubygems'
-require 'bundler'
-require 'rails'
+require 'bundler/setup'
 
-Bundler.require :default, :development
-
+require 'combustion'
 require 'capybara/rspec'
 
-Combustion.initialize! :active_record, :action_controller, :sprockets
+require 'invitational'
+
+Combustion.initialize! :active_record, :action_controller, :action_view, :sprockets
 
 require 'rspec/rails'
 require 'capybara/rails'
 
-require "invitational"
-
 RSpec.configure do |config|
-    config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = true
 end
 
