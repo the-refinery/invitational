@@ -1,1 +1,1 @@
-#Invitational.user_class = "User"
+Invitational.user_class = "User"
