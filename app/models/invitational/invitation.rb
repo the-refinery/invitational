@@ -5,7 +5,7 @@ module Invitational
       :invitable,
       :user
 
-    belongs_to :user, :class_name => Invitational.user_class
+    belongs_to :user, :class_name => Invitational.user_class.to_s
     belongs_to :invitable, :polymorphic => true
 
     validates :email,  :presence => true
