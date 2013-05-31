@@ -135,11 +135,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack
+  activerecord
   capybara (~> 2.0.2)
   combustion (~> 0.3.1)
   invitational!
   jquery-rails
   rspec (~> 2.12.0)
-  rspec-given (~> 2.3.0)
+  rspec-given
   rspec-rails (~> 2.12.0)
+  sprockets
   sqlite3

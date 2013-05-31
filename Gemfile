@@ -15,3 +15,10 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'debugger'
+
+group :test do
+  gem 'activerecord'
+  gem 'actionpack' # action_controller, action_view
+  gem 'sprockets'
+  gem 'rspec-given'
+end
