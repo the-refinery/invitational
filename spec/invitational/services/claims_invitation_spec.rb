@@ -19,7 +19,8 @@ describe Invitational::ClaimsInvitation do
 
       When (:result) { Invitational::ClaimsInvitation.for invitation.claim_hash, user }
 
-      Then  { result.should be_true }
+      Then  { result.success.should be_true }
+      And   { result.invitation.should == invitation}
       And   { user.invitations.should include(invitation) }
     end
 
@@ -28,7 +29,8 @@ describe Invitational::ClaimsInvitation do
 
       When (:result) { Invitational::ClaimsInvitation.for invitation.claim_hash, user }
 
-      Then  { result.should be_true }
+      Then  { result.success.should be_true }
+      And   { result.invitation.should == invitation}
       And   { user.invitations.should include(invitation) }
     end
   end
@@ -39,7 +41,8 @@ describe Invitational::ClaimsInvitation do
 
     When (:result) { Invitational::ClaimsInvitation.for invitation.claim_hash, user }
 
-    Then  { result.should be_false }
+    Then  { result.success.should be_false }
+    And   { result.invitation.should be_nil }
     And   { invitation.user.should == user2 }
     And   { user.invitations.should_not include(invitation) }
   end
