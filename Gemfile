@@ -16,6 +16,8 @@ gem "jquery-rails"
 # To use debugger
 # gem 'debugger'
 
+gem 'protected_attributes'
+
 group :test do
   gem 'activerecord'
   gem 'actionpack' # action_controller, action_view
