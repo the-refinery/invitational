@@ -40,8 +40,8 @@ module Invitational
       where('role = ?', role)
     }
 
-    scope :pending, where('user_id IS NULL')
-    scope :claimed, where('user_id IS NOT NULL')
+    scope :pending, lambda { where('user_id IS NULL') }
+    scope :claimed, lambda { where('user_id IS NOT NULL') }
 
     def user= user
       if user.nil?
