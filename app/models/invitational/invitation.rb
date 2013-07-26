@@ -1,9 +1,6 @@
 module Invitational
   class Invitation < ActiveRecord::Base
-    attr_accessible :email,
-      :role,
-      :invitable,
-      :user
+    include ActiveModel::ForbiddenAttributesProtection
 
     belongs_to :user, :class_name => Invitational.user_class
     belongs_to :invitable, :polymorphic => true
