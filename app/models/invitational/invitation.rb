@@ -50,7 +50,7 @@ module Invitational
       super user
     end
 
-    def save
+    def save(*)
       if id.nil?
         self.date_sent = DateTime.now
         self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
