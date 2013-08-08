@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    invitational (0.0.2)
+    invitational (0.0.3)
       rails (~> 3.2.13)
 
 GEM

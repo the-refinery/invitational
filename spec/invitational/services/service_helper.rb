@@ -19,3 +19,9 @@ def invite_user user, entity, role
   invitation
 end
 
+def invite_uber_admin user
+  invitation = Invitational::Invitation.new(email: user.email, role: -1, user: user)
+  invitation.save
+
+  invitation
+end

@@ -10,7 +10,15 @@ module Invitational
 
     validates :email,  :presence => true
     validates :role,  :presence => true
-    validates :invitable,  :presence => true
+    validates :invitable,  :presence => true, :if => :standard_role?
+
+    def standard_role?
+      role >= 0
+    end
+
+    scope :uber_admin, lambda {
+      where('invitable_id IS NULL AND role = -1')
+    }
 
     scope :for_email, lambda {|email|
       where('email = ?', email)
@@ -55,7 +63,15 @@ module Invitational
     end
 
     def role_title
-      InvitationRoles::ROLES[role]
+      if uber_admin?
+        "Uber Admin"
+      else
+        InvitationRoles::ROLES[role]
+      end
+    end
+
+    def uber_admin?
+      invitable.nil? == true && role == -1
     end
 
     def claimed?
