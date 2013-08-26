@@ -16,7 +16,7 @@ gem "jquery-rails"
 # To use debugger
 # gem 'debugger'
 
-gem 'strong_parameters'
+#gem 'strong_parameters'
 
 group :test do
   gem 'activerecord'

@@ -21,7 +21,8 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "capybara", "~> 2.0.2"
-  s.add_development_dependency "combustion", "~> 0.3.1"
+  #s.add_development_dependency "combustion", "~> 0.3.1"
+  s.add_development_dependency "combustion"
   s.add_development_dependency "rspec", "~> 2.12.0"
   s.add_development_dependency "rspec-rails", "~> 2.12.0"
   s.add_development_dependency "rspec-given", "~> 2.3.0"

@@ -27,15 +27,15 @@ describe Invitational::CreatesUberAdminInvitation do
   end
 
   context "to be immediately claimed" do
-    Given(:user) { setup_user "test@d-i.co" }
+    Given(:user) { setup_user "test2@d-i.co" }
 
     context "when not already invited" do
-      When (:result) {Invitational::CreatesUberAdminInvitation.for "test@d-i.co", user}
+      When (:result) {Invitational::CreatesUberAdminInvitation.for "test2@d-i.co", user}
 
       Then  {result.success.should be_true }
       And   {result.invitation.should_not be_nil}
       And   {result.invitation.invitable.should be_nil}
-      And   {result.invitation.email.should == "test@d-i.co"}
+      And   {result.invitation.email.should == "test2@d-i.co"}
       And   {result.invitation.role.should == -1}
       And   {result.invitation.claimed?.should be_true}
       And   {result.invitation.user.should == user }
