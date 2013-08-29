@@ -1,9 +1,6 @@
 module Invitational
   class Invitation < ActiveRecord::Base
-    attr_accessible :email,
-      :role,
-      :invitable,
-      :user
+    include ActiveModel::ForbiddenAttributesProtection
 
     belongs_to :user, :class_name => Invitational.user_class
     belongs_to :invitable, :polymorphic => true
@@ -40,8 +37,8 @@ module Invitational
       where('role = ?', role)
     }
 
-    scope :pending, where('user_id IS NULL')
-    scope :claimed, where('user_id IS NOT NULL')
+    scope :pending, lambda { where('user_id IS NULL') }
+    scope :claimed, lambda { where('user_id IS NOT NULL') }
 
     def user= user
       if user.nil?
@@ -53,7 +50,7 @@ module Invitational
       super user
     end
 
-    def save
+    def save(*)
       if id.nil?
         self.date_sent = DateTime.now
         self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
