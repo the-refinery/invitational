@@ -34,7 +34,8 @@ module Invitational
     }
 
     scope :by_role, lambda {|role|
-      where('role = ?', role)
+      role_id = Invitational::Role[role]
+      where('role = ?', role_id)
     }
 
     scope :pending, lambda { where('user_id IS NULL') }

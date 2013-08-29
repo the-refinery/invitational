@@ -16,7 +16,7 @@ private
 
       if invites.count > 0
         unless role.nil?
-          invites.first.role == role
+          invites.first.role == Invitational::Role[role]
         else
           true
         end

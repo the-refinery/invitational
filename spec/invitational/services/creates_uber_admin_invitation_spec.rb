@@ -16,7 +16,7 @@ describe Invitational::CreatesUberAdminInvitation do
     end
 
     context "when already invited" do
-      Given {Invitational::Invitation.new(role: -1, email: 'test@d-i.co').save}
+      Given {Invitational::Invitation.new(role: Invitational::Role[:uberadmin], email: 'test@d-i.co').save}
 
       When (:result) {Invitational::CreatesUberAdminInvitation.for "test@d-i.co"}
 
@@ -42,7 +42,7 @@ describe Invitational::CreatesUberAdminInvitation do
     end
 
     context "when already invited" do
-      Given {Invitational::Invitation.new(role: -1, email: 'test@d-i.co', user: user).save}
+      Given {Invitational::Invitation.new(role: Invitational::Role[:uberadmin], email: 'test@d-i.co', user: user).save}
 
       When (:result) {Invitational::CreatesUberAdminInvitation.for "test@d-i.co", user}
 
