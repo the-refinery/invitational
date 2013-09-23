@@ -139,6 +139,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack
   activerecord
+  cancan
   capybara (~> 2.0.2)
   combustion
   invitational!
