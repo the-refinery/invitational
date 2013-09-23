@@ -41,5 +41,4 @@ describe Ability do
     And { i.should be_able_to(:manage, entity2) }
   end
 
-
 end
