@@ -64,7 +64,7 @@ module Invitational
       if uber_admin?
         "Uber Admin"
       else
-        InvitationRoles::ROLES[role]
+        Invitational.roles[role].display_name
       end
     end
 
