@@ -7,4 +7,8 @@ class InvitationalGenerator < Rails::Generators::Base
     @role_list = roles.join(", ")
     template "initializer.rb", "config/initializers/invitational.rb"
   end
+
+  def install_migration
+    rake("invitational_engine:install:migrations")
+  end
 end
