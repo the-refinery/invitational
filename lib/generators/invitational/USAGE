@@ -1,8 +1,8 @@
 Description:
-    Explain the generator
+    This generator installs the necessary components for the Invitational gem.
 
 Example:
-    rails generate invitaional Thing
+    rails generate invitaional :none :user :admin
 
     This will create:
         what/will/it/create
