@@ -1,3 +1,3 @@
-Invitational.user_class = "User"
+Invitational.user_class = "<%= @identity_class %>"
 
 Invitational.define_roles <%= @role_list %>

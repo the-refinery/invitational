@@ -2,7 +2,7 @@ Description:
     This generator installs the necessary components for the Invitational gem.
 
 Example:
-    rails generate invitaional :none :user :admin
+    rails generate invitational :none :user :admin
 
     This will create:
         what/will/it/create
