@@ -1,0 +1,14 @@
+Description:
+    This generator installs the necessary components for the Invitational gem, and provides the initial relatoinship
+    to your identiy class 
+
+Example:
+    rails generate invitational User none admin staff
+
+    This will create:
+      config/initializers/invitational.rb
+      app/model/ability.rb
+      db/migrate/XXXX_create_invitations.invitational_engine.rb
+
+    This will update:
+      app/model/user.rb
