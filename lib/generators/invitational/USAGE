@@ -12,3 +12,4 @@ Example:
 
     This will update:
       app/model/user.rb
+      Gemfile

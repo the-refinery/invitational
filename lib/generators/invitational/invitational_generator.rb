@@ -4,6 +4,10 @@ class InvitationalGenerator < Rails::Generators::Base
   argument :identity_class, type: :string, default: "User", banner: "Class name of identity model (e.g. User)"
   argument :roles, type: :array, default: ["none", "user", "admin"], banner: "List of Roles"
 
+  def add_to_gemfile
+    gem "cancan"
+  end
+
   def initializer_file
     @identity_class = identity_class.gsub(/\,/,"").camelize
     @role_list = roles.map{|role| ":" + role.gsub(/\,/,"")}.join(", ")
