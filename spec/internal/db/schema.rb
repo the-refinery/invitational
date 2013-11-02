@@ -10,4 +10,10 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
+  create_table :children, force: true do |t|
+    t.string :name
+    t.integer :entity_id
+    t.timestamps
+  end
+
 end

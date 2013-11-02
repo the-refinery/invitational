@@ -1,6 +1,7 @@
 module Invitational
   module CanCan
     module Ability
+
       def can(action = nil, subject = nil, conditions = nil, &block)
         roles = conditions.delete(:roles) if conditions
         conditions = nil if conditions and conditions.empty?
@@ -23,11 +24,27 @@ module Invitational
       end
 
       def check_permission_for model, user, in_roles
-        entity_roles  = in_roles.select {|role| role unless role.respond_to? :values}
-        related_roles  = in_roles.select {|role| role if role.respond_to? :values}
 
-        Invitational::ChecksForInvitation.for(user, model, entity_roles)
+        in_roles.reduce(false) do |result,role|
+          result || if role.respond_to? :values
+            method = role.keys.first
+            related = model.send(method)
+
+            if related.respond_to? :any?
+              related.any? do |model|
+                check_permission_for model, user, role.values.flatten
+              end
+            else
+              check_permission_for related, user, role.values.flatten
+            end
+
+          else
+            Invitational::ChecksForInvitation.for(user, model, role)
+          end
+        end
+
       end
+
     end
   end
 end

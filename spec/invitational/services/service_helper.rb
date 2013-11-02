@@ -12,6 +12,15 @@ def setup_entity name
   entity
 end
 
+def setup_child name, entity
+  child = Child.new(name: name)
+  child.save
+
+  entity.children << child
+
+  child
+end
+
 def invite_by_email email, entity, role
   invitation = Invitational::Invitation.new(email: email, invitable: entity, role: Invitational::Role[role])
   invitation.save

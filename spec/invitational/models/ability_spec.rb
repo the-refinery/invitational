@@ -9,7 +9,8 @@ describe Ability do
   Given(:user3) { setup_user "test3@d-i.co" }
 
   Given(:entity1) { setup_entity "Test entity 1"}
-  Given(:entity2) { setup_entity "Test entity 1"}
+  Given(:entity2) { setup_entity "Test entity 2"}
+  Given(:child1) {setup_child "Child 1", entity2}
 
   Given {invite_user user1, entity1, :user}
   Given {invite_user user2, entity2, :admin}
@@ -39,6 +40,13 @@ describe Ability do
 
     Then { i.should be_able_to(:manage, entity1) }
     And { i.should be_able_to(:manage, entity2) }
+  end
+
+  context "Cascading Permissions" do
+    Given (:i) { Ability.new(user2) }
+    When (:role) {:admin}
+
+    Then {i.should be_able_to(:read, child1)}
   end
 
 end
