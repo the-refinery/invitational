@@ -46,7 +46,14 @@ describe Ability do
     Given (:i) { Ability.new(user2) }
     When (:role) {:admin}
 
-    Then {i.should be_able_to(:read, child1)}
+    Then {i.should be_able_to(:manage, child1)}
+  end
+
+  context "Access to everybody" do
+    Given (:i) { Ability.new(user1) }
+    When (:role) {:admin}
+
+    Then {i.should be_able_to(:read, child1) }
   end
 
 end

@@ -14,6 +14,8 @@ class Ability
     can :manage, Entity, roles: [:admin]
     can :read, Entity, roles: [:user]
 
+    can :read, Child
+
     can :manage, Child, roles: [:admin, {entity: [:admin, :user]}]
 
   end

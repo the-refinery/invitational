@@ -3,8 +3,17 @@ module Invitational
     module Ability
 
       def can(action = nil, subject = nil, conditions = nil, &block)
-        roles = conditions.delete(:roles) if conditions
-        conditions = nil if conditions and conditions.empty?
+        if conditions && conditions.has_key?(:roles)
+          roles = conditions.delete(:roles) if conditions
+          conditions = nil if conditions and conditions.empty?
+
+          block ||= setup_role_based_block_for roles, subject, action
+        end
+
+        rules << ::CanCan::Rule.new(true, action, subject, conditions, block)
+      end
+
+      def setup_role_based_block_for roles, subject, action
         key = subject.name.underscore + action.to_s
 
         if roles.respond_to? :values
@@ -15,12 +24,12 @@ module Invitational
 
         role_mappings[key] = roles
 
-        block ||= ->(model){
+        block = ->(model){
           roles = role_mappings[key]
           check_permission_for model, user, roles
         }
 
-        rules << ::CanCan::Rule.new(true, action, subject, conditions, block)
+        block
       end
 
       def check_permission_for model, user, in_roles
