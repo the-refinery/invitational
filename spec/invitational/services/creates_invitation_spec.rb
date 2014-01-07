@@ -19,7 +19,7 @@ describe Invitational::CreatesInvitation do
     end
 
     context "when already invited" do
-      Given {Invitational::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co').save}
+      Given {::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co').save}
 
       When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin}
 
@@ -45,7 +45,7 @@ describe Invitational::CreatesInvitation do
     end
 
     context "when already invited" do
-      Given {Invitational::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co', user: user).save}
+      Given {::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co', user: user).save}
 
       When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin, user}
 

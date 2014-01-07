@@ -12,7 +12,7 @@ module Invitational
 
       unless invitable.invitations.for_email(email).count > 0
         role_id = Role[role]
-        @invitation = Invitation.new(invitable: invitable, role: role_id, email: email)
+        @invitation = ::Invitation.new(invitable: invitable, role: role_id, email: email)
         @invitation.user = user
         @success = @invitation.save
       else

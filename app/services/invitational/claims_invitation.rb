@@ -9,7 +9,7 @@ module Invitational
     end
 
     def initialize claim_hash, user
-      @invitation = Invitational::Invitation.for_claim_hash(claim_hash).first
+      @invitation = Invitation.for_claim_hash(claim_hash).first
 
       if invitation && invitation.unclaimed?
         @invitation.user = user

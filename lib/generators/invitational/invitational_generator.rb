@@ -14,6 +14,10 @@ class InvitationalGenerator < Rails::Generators::Base
     template "initializer.rb", "config/initializers/invitational.rb"
   end
 
+  def invitation_model
+    template "invitation.rb", "app/models/invitation.rb"
+  end
+
   def ability_model
     @identity_model = @identity_class.underscore
     template "ability.rb", "app/models/ability.rb"
@@ -21,7 +25,7 @@ class InvitationalGenerator < Rails::Generators::Base
 
   def link_to_identity_model
     path = "app/models/#{@identity_model}.rb"
-    inject_into_class path, @identity_class.constantize, "  has_many :invitations, class_name: \"Invitational::Invitation\"\n"
+    inject_into_class path, @identity_class.constantize, "  has_many :invitations\n"
   end
 
   def install_migration
