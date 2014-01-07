@@ -23,4 +23,5 @@ group :test do
   gem 'actionpack' # action_controller, action_view
   gem 'sprockets'
   gem 'rspec-given'
+  gem 'cancan'
 end

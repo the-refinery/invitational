@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    invitational (0.0.3)
+    invitational (1.0.0)
+      cancan
       rails (~> 4.0.0)
 
 GEM
@@ -34,6 +35,7 @@ GEM
     arel (4.0.0)
     atomic (1.1.13)
     builder (3.1.4)
+    cancan (1.6.10)
     capybara (2.0.3)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -114,7 +116,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.0.0)
+    sprockets-rails (2.0.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
@@ -137,6 +139,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack
   activerecord
+  cancan
   capybara (~> 2.0.2)
   combustion
   invitational!

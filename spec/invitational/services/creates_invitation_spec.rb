@@ -8,20 +8,20 @@ describe Invitational::CreatesInvitation do
   context "by email" do
 
     context "when not already invited" do
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", 1}
+      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin}
 
       Then  {result.success.should be_true }
       And   {result.invitation.should_not be_nil}
       And   {result.invitation.invitable.should == entity}
       And   {result.invitation.email.should == "test@d-i.co"}
-      And   {result.invitation.role.should == 1}
+      And   {result.invitation.role.should == 2}
       And   {result.invitation.unclaimed?.should be_true}
     end
 
     context "when already invited" do
-      Given {Invitational::Invitation.new(invitable: entity, role: 1, email: 'test@d-i.co').save}
+      Given {::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co').save}
 
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", 1}
+      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin}
 
       Then  {result.success.should be_false }
       And   {result.invitation.should be_nil}
@@ -33,21 +33,21 @@ describe Invitational::CreatesInvitation do
     Given(:user) { setup_user "test@d-i.co" }
 
     context "when not already invited" do
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", 1, user}
+      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin, user}
 
       Then  {result.success.should be_true }
       And   {result.invitation.should_not be_nil}
       And   {result.invitation.invitable.should == entity}
       And   {result.invitation.email.should == "test@d-i.co"}
-      And   {result.invitation.role.should == 1}
+      And   {result.invitation.role.should == 2}
       And   {result.invitation.claimed?.should be_true}
       And   {result.invitation.user.should == user }
     end
 
     context "when already invited" do
-      Given {Invitational::Invitation.new(invitable: entity, role: 1, email: 'test@d-i.co', user: user).save}
+      Given {::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co', user: user).save}
 
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", 1, user}
+      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin, user}
 
       Then  {result.success.should be_false }
       And   {result.invitation.should be_nil}
