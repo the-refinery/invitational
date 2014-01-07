@@ -7,6 +7,10 @@ user identity/authentication and functional authorization.
 
 *More content coming soon*
 
+```
+gem 'invitational', git: 'git@github.com:d-i/invitational.git'
+```
+
 Given that the class name of your Devise (or other authentication environment) is "User"
 
 ```
