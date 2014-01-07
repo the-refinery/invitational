@@ -1,5 +1,0 @@
-= Invitational
-
-This project rocks and uses MIT-LICENSE.
-
-There's even a generator.  Some documentation of this wonderful gem is forthcoming.
