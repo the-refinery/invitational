@@ -25,6 +25,8 @@ rake db:migrate
 
 To run the migration added by the generator
 
+You will also need to run bundle install again, as the generator will add the cancan gem to your gemfile
+
 
 ## Getting Started
 
