@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'invitational/services/service_helper'
 
 describe Invitational::CreatesUberAdminInvitation do
+  Given {no_invitations_exist}
 
   context "by email" do
     context "when not already invited" do

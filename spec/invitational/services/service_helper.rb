@@ -41,3 +41,7 @@ def invite_uber_admin user
 
   invitation
 end
+
+def no_invitations_exist
+  Invitation.destroy_all
+end

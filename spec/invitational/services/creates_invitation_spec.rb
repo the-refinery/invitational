@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'invitational/services/service_helper'
 
 describe Invitational::CreatesInvitation do
+  Given {no_invitations_exist}
 
   Given(:entity) { setup_entity "Test Entity"}
 

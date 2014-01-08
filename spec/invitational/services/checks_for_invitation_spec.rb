@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'invitational/services/service_helper'
 
 describe Invitational::ChecksForInvitation do
+  Given {no_invitations_exist}
 
   Given(:user1) { setup_user "test1@d-i.co" }
   Given(:user2) { setup_user "test2@d-i.co" }
