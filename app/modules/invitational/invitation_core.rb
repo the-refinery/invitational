@@ -44,7 +44,7 @@ module Invitational
     end
 
     def standard_role?
-      role >= 0
+      role.to_i >= 0
     end
 
     def user= user
