@@ -44,11 +44,7 @@ module Invitational
     end
 
     def standard_role?
-      if role.is_a? Symbol
-        role != :uberadmin
-      else
-        role.to_i >= 0
-      end
+      role != :uberadmin
     end
 
     def role
@@ -83,12 +79,12 @@ module Invitational
       if uber_admin?
         "Uber Admin"
       else
-        Invitational.roles[role].display_name
+        role.to_s.titleize
       end
     end
 
     def uber_admin?
-      invitable.nil? == true && role == -1
+      invitable.nil? == true && role == :uberadmin
     end
 
     def claimed?
