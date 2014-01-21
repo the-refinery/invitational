@@ -44,7 +44,11 @@ module Invitational
     end
 
     def standard_role?
-      role.to_i >= 0
+      if role.is_a? Symbol
+        role != :uberadmin
+      else
+        role.to_i >= 0
+      end
     end
 
     def user= user

@@ -15,7 +15,7 @@ describe Invitational::CreatesInvitation do
       And   {result.invitation.should_not be_nil}
       And   {result.invitation.invitable.should == entity}
       And   {result.invitation.email.should == "test@d-i.co"}
-      And   {result.invitation.role.should == 2}
+      And   {result.invitation.role.should == :admin}
       And   {result.invitation.unclaimed?.should be_true}
     end
 
@@ -40,7 +40,7 @@ describe Invitational::CreatesInvitation do
       And   {result.invitation.should_not be_nil}
       And   {result.invitation.invitable.should == entity}
       And   {result.invitation.email.should == "test@d-i.co"}
-      And   {result.invitation.role.should == 2}
+      And   {result.invitation.role.should == :admin}
       And   {result.invitation.claimed?.should be_true}
       And   {result.invitation.user.should == user }
     end

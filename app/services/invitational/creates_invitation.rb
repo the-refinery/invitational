@@ -11,8 +11,7 @@ module Invitational
     def initialize invitable, email, role, user=nil
 
       unless invitable.invitations.for_email(email).count > 0
-        role_id = Role[role]
-        @invitation = ::Invitation.new(invitable: invitable, role: role_id, email: email)
+        @invitation = ::Invitation.new(invitable: invitable, role: role, email: email)
         @invitation.user = user
         @success = @invitation.save
       else
