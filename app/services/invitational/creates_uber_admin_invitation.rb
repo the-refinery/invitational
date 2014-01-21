@@ -10,7 +10,7 @@ module Invitational
     def initialize email, user=nil
 
       unless Invitation.uber_admin.for_email(email).count > 0
-        @invitation = ::Invitation.new(role: -1, email: email)
+        @invitation = ::Invitation.new(role: :uberadmin, email: email)
         @invitation.user = user
         @success = @invitation.save
       else
