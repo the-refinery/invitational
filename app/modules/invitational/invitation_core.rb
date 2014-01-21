@@ -3,7 +3,6 @@ module Invitational
     extend ActiveSupport::Concern
 
     included do
-      belongs_to :user, :class_name => Invitational.user_class
       belongs_to :invitable, :polymorphic => true
 
       validates :email,  :presence => true

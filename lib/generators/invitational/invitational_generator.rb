@@ -2,19 +2,20 @@ class InvitationalGenerator < Rails::Generators::Base
   source_root File.expand_path('../templates', __FILE__)
 
   argument :identity_class, type: :string, default: "User", banner: "Class name of identity model (e.g. User)"
-  argument :roles, type: :array, default: ["none", "user", "admin"], banner: "List of Roles"
 
   def add_to_gemfile
     gem "cancan"
   end
 
-  def initializer_file
-    @identity_class = identity_class.gsub(/\,/,"").camelize
-    @role_list = roles.map{|role| ":" + role.gsub(/\,/,"")}.join(", ")
-    template "initializer.rb", "config/initializers/invitational.rb"
-  end
-
   def invitation_model
+    @identity_class = identity_class.gsub(/\,/,"").camelize
+
+    if  @identity_class != "User"
+      @custom_user_class = ", :class_name => '#{@identity_class}'"
+    else
+      @custom_user_class = ""
+    end
+
     template "invitation.rb", "app/models/invitation.rb"
   end
 
