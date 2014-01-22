@@ -1,12 +1,19 @@
 module Invitational
   module InvitedTo
+    extend ActiveSupport::Concern
 
-    def invited_to *args
-      args.each do |entity|
-        relation = entity.to_s.pluralize.to_sym
-        type = entity.to_s.camelize
+    included do
+      has_many :invitations
+    end
 
-        has_many relation, through: :invitations, source: :invitable, source_type: type
+    module ClassMethods
+      def invited_to *args
+        args.each do |entity|
+          relation = entity.to_s.pluralize.to_sym
+          type = entity.to_s.camelize
+
+          has_many relation, through: :invitations, source: :invitable, source_type: type
+        end
       end
     end
 

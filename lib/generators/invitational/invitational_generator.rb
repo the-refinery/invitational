@@ -26,7 +26,7 @@ class InvitationalGenerator < Rails::Generators::Base
 
   def link_to_identity_model
     path = "app/models/#{@identity_model}.rb"
-    content = "  extend Invitational::InvitedTo\n  has_many :invitations\n"
+    content = "  include Invitational::InvitedTo\n"
 
     inject_into_class path, @identity_class.constantize, content
   end
