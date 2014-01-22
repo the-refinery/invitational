@@ -4,11 +4,19 @@ module Invitational
     attr_reader :success,
                 :invitation
 
-    def self.for invitable, email, role, user=nil
-      CreatesInvitation.new invitable, email, role, user
+    def self.for invitable, target, role
+      CreatesInvitation.new invitable, target, role
     end
 
-    def initialize invitable, email, role, user=nil
+    def initialize invitable, target, role
+
+      if target.is_a? String
+        user = nil
+        email = target
+      else
+        user = target
+        email = user.email
+      end
 
       unless invitable.invitations.for_email(email).count > 0
         @invitation = ::Invitation.new(invitable: invitable, role: role, email: email)

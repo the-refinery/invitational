@@ -31,7 +31,7 @@ describe Invitational::CreatesUberAdminInvitation do
     Given(:user) { setup_user "test2@d-i.co" }
 
     context "when not already invited" do
-      When (:result) {Invitational::CreatesUberAdminInvitation.for "test2@d-i.co", user}
+      When (:result) {Invitational::CreatesUberAdminInvitation.for user}
 
       Then  {result.success.should be_true }
       And   {result.invitation.should_not be_nil}
@@ -43,9 +43,9 @@ describe Invitational::CreatesUberAdminInvitation do
     end
 
     context "when already invited" do
-      Given {::Invitation.new(role: :uberadmin, email: 'test@d-i.co', user: user).save}
+      Given {::Invitation.new(role: :uberadmin, email: 'test2@d-i.co', user: user).save}
 
-      When (:result) {Invitational::CreatesUberAdminInvitation.for "test@d-i.co", user}
+      When (:result) {Invitational::CreatesUberAdminInvitation.for user}
 
       Then  {result.success.should be_false }
       And   {result.invitation.should be_nil}

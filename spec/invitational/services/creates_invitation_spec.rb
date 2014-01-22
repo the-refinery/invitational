@@ -34,7 +34,7 @@ describe Invitational::CreatesInvitation do
     Given(:user) { setup_user "test@d-i.co" }
 
     context "when not already invited" do
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin, user}
+      When (:result) {Invitational::CreatesInvitation.for entity, user, :admin}
 
       Then  {result.success.should be_true }
       And   {result.invitation.should_not be_nil}
@@ -48,7 +48,7 @@ describe Invitational::CreatesInvitation do
     context "when already invited" do
       Given {::Invitation.new(invitable: entity, role: :admin, email: 'test@d-i.co', user: user).save}
 
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin, user}
+      When (:result) {Invitational::CreatesInvitation.for entity, user, :admin}
 
       Then  {result.success.should be_false }
       And   {result.invitation.should be_nil}
