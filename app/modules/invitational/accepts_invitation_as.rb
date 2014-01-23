@@ -16,6 +16,10 @@ module Invitational
 
       def accepts_invitation_as *args
         args.each do |role|
+          relation = role.to_s.pluralize.to_sym
+
+          has_many relation, -> {where "invitations.role = '#{role.to_s}'"}, through: :invitations, source: :user
+
           self.roles << role
         end
       end

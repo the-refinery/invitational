@@ -11,8 +11,8 @@ describe User do
   context 'invited_to creates a has_many_through relationship' do
     When {invite_user user1, entity1, :admin}
 
-    Then {user1.entities.should include(entity1)}
-    And  {user1.children.count.should == 0}
+    Then {user.entities.should include(entity)}
+    And  {user.children.count.should == 0}
   end
 
   context 'indicates if a user is an uberadmin' do
