@@ -17,5 +17,9 @@ module Invitational
       end
     end
 
+    def uber_admin?
+      invitations.uber_admin.count > 0
+    end
+
   end
 end
