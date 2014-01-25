@@ -47,7 +47,9 @@ module Invitational
     end
 
     def role
-      super.to_sym
+      unless super.nil?
+        super.to_sym
+      end
     end
 
     def role=(value)
