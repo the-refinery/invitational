@@ -21,14 +21,14 @@ Run the bundle command to install it.
 After you install the gem, you need to run the generator:
 
 ```
-rails generate invitational MODEL
+rails generate invitational:install MODEL
 ```
 
 Replace MODEL with the class name of your identity class.  Since this is very frequently `User`, the
 generator defaults to that class name, thus you can omit it if that is how your application is built:
 
 ```
-rails generate invitational
+rails generate invitational:install
 ```
 
 The generator will add a database migration you will need to run:
