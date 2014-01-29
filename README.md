@@ -63,7 +63,7 @@ user.vendors
 user.suppliers
 ```
 
-##acccepts_invitation_for
+##accepts_invitation_for
 To configure an entity as able to accept invitations, use the `make_invitable` generator:
 
 ```
