@@ -37,4 +37,13 @@ describe Invitational::ClaimsInvitation do
     And   { user.invitations.should_not include(invitation) }
   end
 
+  context "If the invitation hash is bad" do
+    Given!(:invitation) {invite_by_email user.email, entity, :admin}
+
+    When (:result) { Invitational::ClaimsInvitation.for "THIS_IS_A_BAD_HASH", user }
+
+    Then  { expect(result).to have_failed(Invitational::InvitationNotFoundError) }
+    And   { user.invitations.should_not include(invitation) }
+  end
+
 end
