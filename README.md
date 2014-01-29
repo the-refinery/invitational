@@ -46,8 +46,8 @@ bundle install
 #Implementation
 
 ##invited_to
-The generator will setup your identiy model (`User`) to include the `Invitational::InvitedTo` module.  As part of the Invitational 
-functionality it provides, the invited_to method is added to your user class along with the foundational has_many relationship to 
+The generator will setup your identity model (`User`) to include the `Invitational::InvitedTo` module.  As part of the Invitational 
+functionality it provides, the `invited_to` method is added to your user class along with the foundational has_many relationship to 
 Invitation.  This method accepts a list of the entity classes (as symbols) 
 to which a user can be invited:
 
@@ -64,7 +64,7 @@ user.suppliers
 ```
 
 ##acccepts_invitation_for
-To configure an entity as able to accept invitations, use the make_invitable generator
+To configure an entity as able to accept invitations, use the `make_invitable` generator:
 
 ```
 rails generate invitational:make_invitable MODEL, ROLE1, ROLE2...
@@ -72,7 +72,7 @@ rails generate invitational:make_invitable MODEL, ROLE1, ROLE2...
 
 Here, replace MODEL with the name of the entity class you are making invitable.  Replace, ROLE1, ROLE2 with the 
 list of roles which are valid to this model, for example User, Admin.  The generator will include the `Invitational::AcceptsInvitationAs`
-module, and will pre-populate the call to the accepts_invitation_as method with the list of roles supplied.
+module, and will pre-populate the call to the `accepts_invitation_as` method with the list of roles supplied:
 
 ```
 accepts_invitation_as :user, :admin
