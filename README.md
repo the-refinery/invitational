@@ -1,12 +1,15 @@
-# Invitational
+#Overview
 
-Invitational is a libaray to provide a separation of concerns between
-user identity/authentication and functional authorization.  It provides the ability
-for an administrative user to invite another user to the system and define their
-permissions without having to create a username and passowrd for the new user.
+The purpose of Invitational is to eliminate the tight coupling between user identity/authentication and application authorization.  It is a common pattern in muti-user systems that in order to grant access to someone else, an existing administrator must create a user account, providing a username and password, and then grant permissions to that account.  The administrator then needs to communicate the username and password to the individual, often via email.  The complexity of this process is compounded in mult-account based systems where a single user might wind up with mutiple user accounts with various usernames and passwords.
 
-## Configuration
+Inspired by 37Signals and their single sign on process for Basecamp, Invitational provides an intermediate layer between an identity model (i.e. User) and some entity to which authorization is given.  This intermediate layer, an Invitation, represents a granted role for a given entity.  These roles can then be leveraged by the application's functional authorization system.
 
+Out of the box, Invitational integrates with the CanCan gem through a custom DSL to provide an easy method of implementation of functional authorization.  The generator adds a reference to CanCan to the application's Gemfile, and sets up an initial Ability file.
+
+An invitation is initially created in an un-claimed state.  The invitation is associated with an email address, but can be claimed by any user who has the unique claim hash.  The Invitational library allows for this delegation of authority, though it is fully possible for a host application to implement a requirement that the user claiming an invitation must match the email for which the invitation was created.  Once claimed, an invitation may not be claimed again by any other user.
+
+
+#Configuration
 Include the gem into your application
 
 ```
@@ -38,17 +41,21 @@ You will also need to run bundle install again, as the generator will add the ca
 bundle install
 ```
 
+#Implementation
 
-## Getting Started
+##invited_to
 
-*More content coming soon*
+##acccepts_invitation_for
 
-```
-rake invitational:create_uberadmin
-```
-Will create an uberadmin invitation, and present the claim hash.  You can then claim this hash to setup the
-initial uberadmin user.
+#Usage
+##Creating Invitations
 
-## Usage
 
-*More content coming soon*
+
+##Claiming Invitations
+
+##Checking for Invitations
+
+##CanCan
+
+##UberAdmin
