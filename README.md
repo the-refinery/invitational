@@ -9,21 +9,21 @@ Out of the box, Invitational integrates with the CanCan gem through a custom DSL
 An invitation is initially created in an un-claimed state.  The invitation is associated with an email address, but can be claimed by any user who has the unique claim hash.  The Invitational library allows for this delegation of authority, though it is fully possible for a host application to implement a requirement that the user claiming an invitation must match the email for which the invitation was created.  Once claimed, an invitation may not be claimed again by any other user.
 
 
-#Configuration
-Include the gem into your application
+#Getting Started
+Invitational works with Rails 4.0 and up.  You can add it to your Gemfile with:
 
 ```
 gem 'invitational', git: 'git@github.com:d-i/invitational.git'
 ```
 
-Then execute the generator configure invitational into your application:
+After you install the gem, you need to run the generator:
 
 ```
-rails generate invitational identity_class_name
+rails generate invitational MODEL
 ```
 
-The generator defaults to an identity class name of "User", so if "User" is the identiy
-model in your application, you can leave off the arguement:
+Replace MODEL with the class name of your identiy class.  Since this is very frequently `User`, the
+generator defaults to that class name, thus you can omit it if that is how your application is built:
 
 ```
 rails generate invitational
