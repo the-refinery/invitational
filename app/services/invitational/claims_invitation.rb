@@ -1,24 +1,17 @@
 module Invitational
   class ClaimsInvitation
 
-    attr_reader :success,
-                :invitation
-
     def self.for claim_hash, user
-      ClaimsInvitation.new claim_hash, user
-    end
-
-    def initialize claim_hash, user
-      @invitation = Invitation.for_claim_hash(claim_hash).first
+      invitation = Invitation.for_claim_hash(claim_hash).first
 
       if invitation && invitation.unclaimed?
-        @invitation.user = user
-        @success = @invitation.save
+        invitation.user = user
+        invitation.save
+        invitation
       else
-        @invitation = nil
-        @success = false
+        raise Invitational::AlreadyClaimedError.new
       end
-    end
 
+    end
   end
 end
