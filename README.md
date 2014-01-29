@@ -24,7 +24,7 @@ After you install the gem, you need to run the generator:
 rails generate invitational MODEL
 ```
 
-Replace MODEL with the class name of your identiy class.  Since this is very frequently `User`, the
+Replace MODEL with the class name of your identity class.  Since this is very frequently `User`, the
 generator defaults to that class name, thus you can omit it if that is how your application is built:
 
 ```
