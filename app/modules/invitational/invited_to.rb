@@ -21,5 +21,9 @@ module Invitational
       invitations.uber_admin.count > 0
     end
 
+    def invited_to? entity, role=nil
+      Invitational::ChecksForInvitation.for self, entity,role
+    end
+
   end
 end

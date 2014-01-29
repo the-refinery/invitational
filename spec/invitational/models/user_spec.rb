@@ -13,20 +13,53 @@ describe User do
 
     Then {user1.entities.should include(entity1)}
     And  {user1.children.count.should == 0}
-  end
+    end
 
   context 'indicates if a user is an uberadmin' do
-
     context 'when an uberadmin' do
       When {invite_uber_admin user2}
 
       Then {user2.uber_admin?.should be_true}
-    end
+      end
 
     context 'when not an uberadmin' do
       When {invite_user user1, entity1, :admin}
 
       Then {user1.uber_admin?.should_not be_true}
+      end
+  end
+
+  context 'checks to see if a user is invited to a given entity' do
+
+    context 'for any role' do
+      context 'when invited' do
+        When {invite_user user1, entity1, :admin}
+
+        Then {user1.invited_to?(entity1).should be_true}
+      end
+
+      context 'when not invited' do
+        When {invite_user user2, entity1, :admin}
+
+        Then {user1.invited_to?(entity1).should_not be_true}
+      end
+    end
+
+
+    context 'for a specific role' do
+      When {invite_user user1, entity1, :admin}
+
+      context 'when invited' do
+        Then {user1.invited_to?(entity1, :admin).should be_true}
+      end
+
+      context 'when not invited' do
+        Then {user2.invited_to?(entity1, :admin).should_not be_true}
+      end
+
+      context 'when invited to a different role' do
+        Then {user1.invited_to?(entity1, :user).should_not be_true}
+      end
     end
 
   end
