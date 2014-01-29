@@ -54,9 +54,8 @@ describe Invitational::Invitation do
     context "By Hash" do
       When (:result) {Invitation.claim unclaimed.claim_hash, user1}
 
-      Then {result.success.should be_true}
-      And  {result.invitation.id.should == unclaimed.id}
-      And  {user1.entities.should include(entity1)}
+      Then  { result.id.should == unclaimed.id}
+      And   { user1.invitations.should include(result) }
     end
 
     context "All for a given user" do
