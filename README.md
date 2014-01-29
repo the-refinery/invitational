@@ -86,10 +86,21 @@ entity.users
 entity.admins
 ```
 
+You can then add this entity to the list of invitable classes on the `invited_to` call in your identity class.
+
 #Usage
 ##Creating Invitations
+To create an invitation to a given model:
+
+```
+entity = Entity.find(1)
+
+entity.invite "foo@bar.com", :admin
+```
 
 
+
+###Immediately Claimed Invitations
 
 ##Claiming Invitations
 
