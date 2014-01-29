@@ -3,7 +3,7 @@ module Invitational
     extend ActiveSupport::Concern
 
     included do
-      has_many :invitations
+      has_many :invitations, dependent: :destroy
     end
 
     module ClassMethods

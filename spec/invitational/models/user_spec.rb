@@ -64,5 +64,14 @@ describe User do
 
   end
 
+  context "cleans up invitations when a user is deleted" do
+    Given! (:invite) {invite_user user1, entity1, :admin}
+    Given {user1.destroy}
+
+    When (:result) {Invitation.find(invite.id)}
+
+    Then {expect(result).to have_failed(ActiveRecord::RecordNotFound)}
+  end
+
 end
 

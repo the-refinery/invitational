@@ -32,4 +32,14 @@ describe Entity do
     end
   end
 
+  context "cleans up invitations when an entity is deleted" do
+    Given! (:invite) {invite_user user, entity, :admin}
+    Given {entity.destroy}
+
+    When (:result) {Invitation.find(invite.id)}
+
+    Then {expect(result).to have_failed(ActiveRecord::RecordNotFound)}
+  end
+
+
 end

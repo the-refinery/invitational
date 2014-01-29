@@ -3,7 +3,7 @@ module Invitational
     extend ActiveSupport::Concern
 
     included do
-      has_many :invitations, :as => :invitable
+      has_many :invitations, :as => :invitable, dependent: :destroy
 
       @@roles = Array.new
 
