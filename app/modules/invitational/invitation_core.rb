@@ -39,6 +39,17 @@ module Invitational
     end
 
     module ClassMethods
+      def claim claim_hash, user
+        Invitational::ClaimsInvitation.for claim_hash, user
+      end
+
+      def claim_all_for user
+        Invitational::ClaimsAllInvitations.for user
+      end
+
+      def invite_uberadmin target
+        Invitational::CreatesUberAdminInvitation.for target
+      end
 
     end
 
@@ -95,6 +106,5 @@ module Invitational
     def unclaimed?
       !claimed?
     end
-
   end
 end
