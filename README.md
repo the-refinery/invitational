@@ -98,14 +98,54 @@ entity = Entity.find(1)
 entity.invite "foo@bar.com", :admin
 ```
 
-
+The method will return the Invitation.  In the event that the email has already been invited to that entity, 
+an `Invitational::AlreadyInvitedError` will be raised.  If the passed role is not valid for the given entity (based on its 
+`accepts_invitation_as` call), an `Invitational::InvalidRoleError` will be raised.
 
 ###Immediately Claimed Invitations
 
+In some situations it is preferable to have an invitation created that is immediately claimed by an existing user.
+For example, if the current user is creating an invitable entity, they would likely want to have immediate administrative
+authority to that entity.  In such situations, you can pass a user object (an instance of your identity class) to
+the invite method instead of an email.  The invitation that is created will be immedately claimed by that user:
+
+```
+entity = Entity.create(...)
+
+entity.invite current_user, :admin
+```
+
 ##Claiming Invitations
+
+Invitations can be claimed by passing their hash and the claiming user to the `claim` class method on Invitation:
+
+```
+Invitation.claim claim_hash, current_user
+```
+
+The method will return the claimed Invitation. In the event that the hash does match an existing invitation, 
+an `Invitational::InvitationNotFoundError` will be raised.  If the hash is found, but the invitation has already 
+been claimed, an `Invitational::AlreadyClaimedError` will be raised.
 
 ##Checking for Invitations
 
-##CanCan
+The `invited_to?` instance method that Invitational adds to your identity class provides an easy interface to 
+check if a user has an accepted invitation to a specific entity.  Your query can be general (invited in any role) or 
+specifically for a supplied role:
+
+```
+current_user.invited_to? entity
+```
+
+Will return true if the current user has accepted an invitation in any role to the entity.
+
+```
+current_user.invited_to? entity, :admin
+```
+
+Will only return true if the current user has accepted an invitation as an Admin to the entity.
 
 ##UberAdmin
+
+##CanCan
+
