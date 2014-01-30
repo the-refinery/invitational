@@ -4,27 +4,27 @@ module Invitational
                 :invitation
 
     def self.for target
-      CreatesUberAdminInvitation.new target
-    end
-
-    def initialize target
-
       if target.is_a? String
         user = nil
         email = target
+
+        if Invitation.uber_admin.for_email(email).count > 0
+          raise Invitational::AlreadyInvitedError.new
+        end
       else
         user = target
         email = user.email
+
+        if user.uber_admin?
+          raise Invitational::AlreadyInvitedError.new
+        end
       end
 
-      unless Invitation.uber_admin.for_email(email).count > 0
-        @invitation = ::Invitation.new(role: :uberadmin, email: email)
-        @invitation.user = user
-        @success = @invitation.save
-      else
-        @success = false
-      end
+      invitation = ::Invitation.new(role: :uberadmin, email: email)
+      invitation.user = user
+      invitation.save
 
+      invitation
     end
 
   end

@@ -8,12 +8,11 @@ describe Invitational::CreatesUberAdminInvitation do
     context "when not already invited" do
       When (:result) {Invitational::CreatesUberAdminInvitation.for "test@d-i.co"}
 
-      Then  {result.success.should be_true }
-      And   {result.invitation.should_not be_nil}
-      And   {result.invitation.invitable.should be_nil}
-      And   {result.invitation.email.should == "test@d-i.co"}
-      And   {result.invitation.role.should == :uberadmin }
-      And   {result.invitation.unclaimed?.should be_true}
+      Then  {result.should_not be_nil}
+      And   {result.invitable.should be_nil}
+      And   {result.email.should == "test@d-i.co"}
+      And   {result.role.should == :uberadmin }
+      And   {result.unclaimed?.should be_true}
     end
 
     context "when already invited" do
@@ -21,8 +20,7 @@ describe Invitational::CreatesUberAdminInvitation do
 
       When (:result) {Invitational::CreatesUberAdminInvitation.for "test@d-i.co"}
 
-      Then  {result.success.should be_false }
-      And   {result.invitation.should be_nil}
+      Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
     end
 
   end
@@ -33,13 +31,12 @@ describe Invitational::CreatesUberAdminInvitation do
     context "when not already invited" do
       When (:result) {Invitational::CreatesUberAdminInvitation.for user}
 
-      Then  {result.success.should be_true }
-      And   {result.invitation.should_not be_nil}
-      And   {result.invitation.invitable.should be_nil}
-      And   {result.invitation.email.should == "test2@d-i.co"}
-      And   {result.invitation.role.should == :uberadmin}
-      And   {result.invitation.claimed?.should be_true}
-      And   {result.invitation.user.should == user }
+      Then  {result.should_not be_nil}
+      And   {result.invitable.should be_nil}
+      And   {result.email.should == "test2@d-i.co"}
+      And   {result.role.should == :uberadmin}
+      And   {result.claimed?.should be_true}
+      And   {result.user.should == user }
     end
 
     context "when already invited" do
@@ -47,8 +44,7 @@ describe Invitational::CreatesUberAdminInvitation do
 
       When (:result) {Invitational::CreatesUberAdminInvitation.for user}
 
-      Then  {result.success.should be_false }
-      And   {result.invitation.should be_nil}
+      Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
     end
 
   end

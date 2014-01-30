@@ -71,24 +71,30 @@ describe Invitational::Invitation do
     context "By email" do
       When (:result) {Invitation.invite_uberadmin user4.email}
 
-      Then  {result.success.should be_true }
-      And   {result.invitation.should_not be_nil}
-      And   {result.invitation.invitable.should be_nil}
-      And   {result.invitation.email.should == user4.email}
-      And   {result.invitation.role.should == :uberadmin }
-      And   {result.invitation.unclaimed?.should be_true}
+      Then  {result.should_not be_nil}
+      And   {result.invitable.should be_nil}
+      And   {result.email.should == user4.email}
+      And   {result.role.should == :uberadmin }
+      And   {result.unclaimed?.should be_true}
     end
 
     context "Existing user" do
       When (:result) {Invitation.invite_uberadmin user4}
 
-      Then  {result.success.should be_true }
-      And   {result.invitation.should_not be_nil}
-      And   {result.invitation.invitable.should be_nil}
-      And   {result.invitation.email.should == user4.email}
-      And   {result.invitation.role.should == :uberadmin}
-      And   {result.invitation.claimed?.should be_true}
-      And   {result.invitation.user.should == user4 }
+      Then  {result.should_not be_nil}
+      And   {result.invitable.should be_nil}
+      And   {result.email.should == user4.email}
+      And   {result.role.should == :uberadmin}
+      And   {result.claimed?.should be_true}
+      And   {result.user.should == user4 }
+    end
+
+    context "When already invited" do
+      Given {invite_uber_admin user4}
+
+      When (:result) {Invitation.invite_uberadmin user4}
+
+      Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
     end
   end
 
