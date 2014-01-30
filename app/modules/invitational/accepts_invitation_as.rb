@@ -26,9 +26,11 @@ module Invitational
     end
 
     def invite target, role
-      if @@roles.include? role
-        Invitational::CreatesInvitation.for self, target, role
+      unless @@roles.include? role
+        raise Invitational::InvalidRoleError.new
       end
+
+      Invitational::CreatesInvitation.for self, target, role
     end
 
   end

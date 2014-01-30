@@ -17,18 +17,25 @@ describe Entity do
     context "Users can be invited with a defined role" do
       When(:result) {entity.invite user, :admin}
 
-      Then  {result.success.should be_true }
-      And   {result.invitation.should_not be_nil}
-      And   {result.invitation.invitable.should == entity}
-      And   {result.invitation.user.should == user }
-      And   {result.invitation.role.should == :admin}
-      And   {result.invitation.claimed?.should be_true}
-      end
+      Then  {result.should_not be_nil}
+      And   {result.invitable.should == entity}
+      And   {result.user.should == user }
+      And   {result.role.should == :admin}
+      And   {result.claimed?.should be_true}
+    end
+
+    context "Users cannot be invited again if they are already invited" do
+      Given {invite_user user, entity, :admin}
+
+      When(:result) {entity.invite user, :user}
+
+      Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
+    end
 
     context "Users cannot be invited with a role that isn't defined on the entity" do
       When(:result) {entity.invite user, :client}
 
-      Then  {result.should be_nil }
+      Then  { expect(result).to have_failed(Invitational::InvalidRoleError) }
     end
   end
 
@@ -40,6 +47,5 @@ describe Entity do
 
     Then {expect(result).to have_failed(ActiveRecord::RecordNotFound)}
   end
-
 
 end
