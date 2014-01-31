@@ -177,3 +177,12 @@ This will output the claim hash for a new UberAdmin invitation.
 
 ##CanCan
 
+Invitational adds a new condition key to CanCan's abilities, `:role`. This allows you to define the role(s)
+that a user must be invited into for a specific entity in order to perform the specified action.  For example, 
+to indicate that a user invited to a parent entity in an admin role can manage the parent entity, but a user 
+invited to a staff role can only read the parent entity, in your `ability.rb` file:
+
+```
+can :manage, Parent, roles: [:admin]
+can :read, Parent, roles: [:staff]
+```
