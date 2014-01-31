@@ -147,5 +147,33 @@ Will only return true if the current user has accepted an invitation as an Admin
 
 ##UberAdmin
 
+Invitational provides a special, system-wide, invitation and role called `:uberadmin`.  A user that has
+claimed an UberAdmin invitation will always indicate they have been invited to a given role for a given entity.  
+In other words, every call to `invited_to?` for an UberAdmin will return true.  
+
+To create an UberAdmin invitation:
+
+```
+License.invite_uberadmin "foo@bar.com"
+```
+
+As with creating standard invitations, you can pass a user instead of an email to have the invitation
+claimed immediately by that user:
+
+```
+License.invite_uberadmin current_user
+```
+
+The process to claim an UberAdmin invitation is the same as any other invitation.
+
+To make getting started with a brand new Invitational based environment easier, a rake task is provided to 
+create a new UberAdmin invitation.
+
+```
+rake invitational:create_uberadmin
+```
+
+This will output the claim hash for a new UberAdmin invitation.
+
 ##CanCan
 
