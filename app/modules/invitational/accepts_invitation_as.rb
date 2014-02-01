@@ -5,10 +5,10 @@ module Invitational
     included do
       has_many :invitations, :as => :invitable, dependent: :destroy
 
-      @@roles = Array.new
+      @roles = Array.new
 
       def self.roles
-        @@roles
+        @roles
       end
     end
 
@@ -26,7 +26,7 @@ module Invitational
     end
 
     def invite target, role
-      unless @@roles.include? role
+      unless self.class.roles.include? role
         raise Invitational::InvalidRoleError.new
       end
 
