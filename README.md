@@ -186,3 +186,30 @@ invited to a staff role can only read the parent entity, in your `ability.rb` fi
 can :manage, Parent, roles: [:admin]
 can :read, Parent, roles: [:staff]
 ```
+
+###Invitation to a parent
+To idenfitify abilities based upon invitations to a parent entity, add a hash as an element to the roles array, 
+supplying the parent attribute name as a key, and an allowed roles array as the value:
+
+```
+can :manage, Child, roles[ {parent: [:admin, :staff]}]
+```
+
+The parent invitation can be used recursively too, to specify grand-parent (or above) relationships:
+
+```
+can :manage, Child, roles[ {parent: {grand_parent: [:admin, :staff]}}]
+```
+
+To specify child and parent invitations, you can combine them on one line:
+
+```
+can :manage, Child, roles[:child_admin, {parent: [:admin, :staff]}]
+```
+
+However, it is recommended to specify them on separate lines:
+
+```
+can :manage, Child, roles[:child_admin]
+can :manage, Child, roles[ {parent: [:admin, :staff]}]
+```
