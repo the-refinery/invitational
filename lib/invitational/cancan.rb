@@ -54,6 +54,10 @@ module Invitational
 
       end
 
+      def attribute_roles attribute, roles
+        {attribute => roles}
+      end
+
     end
   end
 end
