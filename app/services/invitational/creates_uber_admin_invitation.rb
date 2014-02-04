@@ -3,20 +3,28 @@ module Invitational
     attr_reader :success,
                 :invitation
 
-    def self.for email, user=nil
-      CreatesUberAdminInvitation.new email, user
-    end
+    def self.for target
+      if target.is_a? String
+        user = nil
+        email = target
 
-    def initialize email, user=nil
-
-      unless Invitation.uber_admin.for_email(email).count > 0
-        @invitation = ::Invitation.new(role: -1, email: email)
-        @invitation.user = user
-        @success = @invitation.save
+        if Invitation.uber_admin.for_email(email).count > 0
+          raise Invitational::AlreadyInvitedError.new
+        end
       else
-        @success = false
+        user = target
+        email = user.email
+
+        if user.uber_admin?
+          raise Invitational::AlreadyInvitedError.new
+        end
       end
 
+      invitation = ::Invitation.new(role: :uberadmin, email: email)
+      invitation.user = user
+      invitation.save
+
+      invitation
     end
 
   end

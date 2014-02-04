@@ -3,7 +3,6 @@ module Invitational
     extend ActiveSupport::Concern
 
     included do
-      belongs_to :user, :class_name => Invitational.user_class
       belongs_to :invitable, :polymorphic => true
 
       validates :email,  :presence => true
@@ -11,7 +10,7 @@ module Invitational
       validates :invitable,  :presence => true, :if => :standard_role?
 
       scope :uber_admin, lambda {
-        where('invitable_id IS NULL AND role = -1')
+        where('invitable_id IS NULL AND role = "uberadmin"')
       }
 
       scope :for_email, lambda {|email|
@@ -40,11 +39,33 @@ module Invitational
     end
 
     module ClassMethods
+      def claim claim_hash, user
+        Invitational::ClaimsInvitation.for claim_hash, user
+      end
+
+      def claim_all_for user
+        Invitational::ClaimsAllInvitations.for user
+      end
+
+      def invite_uberadmin target
+        Invitational::CreatesUberAdminInvitation.for target
+      end
 
     end
 
     def standard_role?
-      role >= 0
+      role != :uberadmin
+    end
+
+    def role
+      unless super.nil?
+        super.to_sym
+      end
+    end
+
+    def role=(value)
+      super(value.to_sym)
+      role
     end
 
     def user= user
@@ -70,12 +91,12 @@ module Invitational
       if uber_admin?
         "Uber Admin"
       else
-        Invitational.roles[role].display_name
+        role.to_s.titleize
       end
     end
 
     def uber_admin?
-      invitable.nil? == true && role == -1
+      invitable.nil? == true && role == :uberadmin
     end
 
     def claimed?
@@ -85,6 +106,5 @@ module Invitational
     def unclaimed?
       !claimed?
     end
-
   end
 end

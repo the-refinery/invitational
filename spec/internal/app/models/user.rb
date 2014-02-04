@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-
   include ActiveModel::ForbiddenAttributesProtection
-  has_many :invitations
+  include Invitational::InvitedTo
 
+  invited_to :entity, :child
 end

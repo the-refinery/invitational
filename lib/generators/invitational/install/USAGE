@@ -3,11 +3,11 @@ Description:
     to your identiy class 
 
 Example:
-    rails generate invitational User none admin staff
+    rails generate invitational User
 
     This will create:
-      config/initializers/invitational.rb
       app/model/ability.rb
+      app/model/invitation.rb
       db/migrate/XXXX_create_invitations.invitational_engine.rb
 
     This will update:

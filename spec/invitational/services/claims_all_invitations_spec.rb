@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'invitational/services/service_helper'
 
 describe Invitational::ClaimsAllInvitations do
+  Given {no_invitations_exist}
+
   Given(:user) { setup_user "test@d-i.co" }
   Given(:entity1) { setup_entity "Test entity 1"}
   Given(:entity2) { setup_entity "Test entity 2"}

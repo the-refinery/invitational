@@ -25,10 +25,9 @@ private
 
     def self.role_check invitation, roles
       if roles.respond_to? :map
-        role_numbers = roles.map {|role| Invitational::Role[role]}
-        role_numbers.include? invitation.role
+        roles.include? invitation.role
       else
-        invitation.role == Invitational::Role[roles]
+        invitation.role == roles
       end
     end
 
