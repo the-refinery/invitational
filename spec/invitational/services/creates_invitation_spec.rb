@@ -11,21 +11,19 @@ describe Invitational::CreatesInvitation do
     context "when not already invited" do
       When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin}
 
-      Then  {result.success.should be_true }
-      And   {result.invitation.should_not be_nil}
-      And   {result.invitation.invitable.should == entity}
-      And   {result.invitation.email.should == "test@d-i.co"}
-      And   {result.invitation.role.should == 2}
-      And   {result.invitation.unclaimed?.should be_true}
+      Then  {result.should_not be_nil}
+      And   {result.invitable.should == entity}
+      And   {result.email.should == "test@d-i.co"}
+      And   {result.role.should == :admin}
+      And   {result.unclaimed?.should be_true}
     end
 
     context "when already invited" do
-      Given {::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co').save}
+      Given {::Invitation.new(invitable: entity, role: :admin, email: 'test@d-i.co').save}
 
       When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin}
 
-      Then  {result.success.should be_false }
-      And   {result.invitation.should be_nil}
+      Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
     end
 
   end
@@ -34,24 +32,22 @@ describe Invitational::CreatesInvitation do
     Given(:user) { setup_user "test@d-i.co" }
 
     context "when not already invited" do
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin, user}
+      When (:result) {Invitational::CreatesInvitation.for entity, user, :admin}
 
-      Then  {result.success.should be_true }
-      And   {result.invitation.should_not be_nil}
-      And   {result.invitation.invitable.should == entity}
-      And   {result.invitation.email.should == "test@d-i.co"}
-      And   {result.invitation.role.should == 2}
-      And   {result.invitation.claimed?.should be_true}
-      And   {result.invitation.user.should == user }
+      Then  {result.should_not be_nil}
+      And   {result.invitable.should == entity}
+      And   {result.email.should == "test@d-i.co"}
+      And   {result.role.should == :admin}
+      And   {result.claimed?.should be_true}
+      And   {result.user.should == user }
     end
 
     context "when already invited" do
-      Given {::Invitation.new(invitable: entity, role: Invitational::Role[:admin], email: 'test@d-i.co', user: user).save}
+      Given {::Invitation.new(invitable: entity, role: :admin, email: 'test@d-i.co', user: user).save}
 
-      When (:result) {Invitational::CreatesInvitation.for entity, "test@d-i.co", :admin, user}
+      When (:result) {Invitational::CreatesInvitation.for entity, user, :admin}
 
-      Then  {result.success.should be_false }
-      And   {result.invitation.should be_nil}
+      Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
     end
 
   end

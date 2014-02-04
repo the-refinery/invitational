@@ -1,6 +1,8 @@
 class Entity < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  has_many :invitations, :as => :invitable
+  include Invitational::AcceptsInvitationAs
 
   has_many :children
+
+  accepts_invitation_as :admin, :user
 end

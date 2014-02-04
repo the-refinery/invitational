@@ -13,8 +13,7 @@ describe Invitational::ClaimsInvitation do
 
       When (:result) { Invitational::ClaimsInvitation.for invitation.claim_hash, user }
 
-      Then  { result.success.should be_true }
-      And   { result.invitation.should == invitation}
+      Then  { result.should == invitation}
       And   { user.invitations.should include(invitation) }
     end
 
@@ -23,8 +22,7 @@ describe Invitational::ClaimsInvitation do
 
       When (:result) { Invitational::ClaimsInvitation.for invitation.claim_hash, user }
 
-      Then  { result.success.should be_true }
-      And   { result.invitation.should == invitation}
+      Then  { result.should == invitation}
       And   { user.invitations.should include(invitation) }
     end
   end
@@ -35,9 +33,16 @@ describe Invitational::ClaimsInvitation do
 
     When (:result) { Invitational::ClaimsInvitation.for invitation.claim_hash, user }
 
-    Then  { result.success.should be_false }
-    And   { result.invitation.should be_nil }
-    And   { invitation.user.should == user2 }
+    Then  { expect(result).to have_failed(Invitational::AlreadyClaimedError) }
+    And   { user.invitations.should_not include(invitation) }
+  end
+
+  context "If the invitation hash is bad" do
+    Given!(:invitation) {invite_by_email user.email, entity, :admin}
+
+    When (:result) { Invitational::ClaimsInvitation.for "THIS_IS_A_BAD_HASH", user }
+
+    Then  { expect(result).to have_failed(Invitational::InvitationNotFoundError) }
     And   { user.invitations.should_not include(invitation) }
   end
 

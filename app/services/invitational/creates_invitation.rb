@@ -1,24 +1,29 @@
 module Invitational
   class CreatesInvitation
 
-    attr_reader :success,
-                :invitation
+    def self.for invitable, target, role
+      if target.is_a? String
+        user = nil
+        email = target
 
-    def self.for invitable, email, role, user=nil
-      CreatesInvitation.new invitable, email, role, user
-    end
+        if invitable.invitations.for_email(email).count > 0
+          raise Invitational::AlreadyInvitedError
+        end
 
-    def initialize invitable, email, role, user=nil
-
-      unless invitable.invitations.for_email(email).count > 0
-        role_id = Role[role]
-        @invitation = ::Invitation.new(invitable: invitable, role: role_id, email: email)
-        @invitation.user = user
-        @success = @invitation.save
       else
-        @success = false
+        user = target
+        email = user.email
+
+        if user.invitations.for_invitable(invitable.class, invitable.id).count > 0
+          raise Invitational::AlreadyInvitedError
+        end
       end
 
+      invitation = ::Invitation.new(invitable: invitable, role: role, email: email)
+      invitation.user = user
+      invitation.save
+
+      invitation
     end
 
   end

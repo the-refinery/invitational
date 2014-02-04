@@ -2,7 +2,7 @@ class CreateInvitations < ActiveRecord::Migration
   def change
     create_table :invitations do |t|
       t.string :email
-      t.integer :role
+      t.string :role
       t.references :invitable, polymorphic: true
       t.integer :user_id
       t.datetime :date_sent
