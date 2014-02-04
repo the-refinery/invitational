@@ -154,14 +154,14 @@ In other words, every call to `invited_to?` for an UberAdmin will return true.
 To create an UberAdmin invitation:
 
 ```
-License.invite_uberadmin "foo@bar.com"
+Invitation.invite_uberadmin "foo@bar.com"
 ```
 
 As with creating standard invitations, you can pass a user instead of an email to have the invitation
 claimed immediately by that user:
 
 ```
-License.invite_uberadmin current_user
+Invitation.invite_uberadmin current_user
 ```
 
 The process to claim an UberAdmin invitation is the same as any other invitation.
