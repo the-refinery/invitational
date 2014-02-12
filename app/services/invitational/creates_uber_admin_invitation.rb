@@ -8,14 +8,14 @@ module Invitational
         user = nil
         email = target
 
-        if Invitation.uber_admin.for_email(email).count > 0
+        if Invitation.uberadmin.for_email(email).count > 0
           raise Invitational::AlreadyInvitedError.new
         end
       else
         user = target
         email = user.email
 
-        if user.uber_admin?
+        if user.uberadmin?
           raise Invitational::AlreadyInvitedError.new
         end
       end

@@ -19,13 +19,13 @@ describe User do
     context 'when an uberadmin' do
       When {invite_uber_admin user2}
 
-      Then {user2.uber_admin?.should be_true}
+      Then {user2.uberadmin?.should be_true}
       end
 
     context 'when not an uberadmin' do
       When {invite_user user1, entity1, :admin}
 
-      Then {user1.uber_admin?.should_not be_true}
+      Then {user1.uberadmin?.should_not be_true}
       end
   end
 

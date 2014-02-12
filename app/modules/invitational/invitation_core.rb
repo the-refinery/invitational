@@ -9,7 +9,7 @@ module Invitational
       validates :role,  :presence => true
       validates :invitable,  :presence => true, :if => :standard_role?
 
-      scope :uber_admin, lambda {
+      scope :uberadmin, lambda {
         where("invitable_id IS NULL AND role = 'uberadmin'")
       }
 
@@ -88,14 +88,14 @@ module Invitational
     end
 
     def role_title
-      if uber_admin?
+      if uberadmin?
         "Uber Admin"
       else
         role.to_s.titleize
       end
     end
 
-    def uber_admin?
+    def uberadmin?
       invitable.nil? == true && role == :uberadmin
     end
 

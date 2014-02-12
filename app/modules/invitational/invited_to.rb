@@ -17,8 +17,8 @@ module Invitational
       end
     end
 
-    def uber_admin?
-      invitations.uber_admin.count > 0
+    def uberadmin?
+      invitations.uberadmin.count > 0
     end
 
     def invited_to? entity, role=nil

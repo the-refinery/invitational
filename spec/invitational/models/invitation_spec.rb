@@ -29,12 +29,12 @@ describe Invitational::Invitation do
 
   context "Type" do
     context "Standard Role" do
-      Then {unclaimed.uber_admin?.should_not be_true}
-      And  {claimed.uber_admin?.should_not be_true}
+      Then {unclaimed.uberadmin?.should_not be_true}
+      And  {claimed.uberadmin?.should_not be_true}
     end
 
     context "Uber Admin" do
-      Then {uber_admin.uber_admin?.should be_true}
+      Then {uber_admin.uberadmin?.should be_true}
     end
   end
 
