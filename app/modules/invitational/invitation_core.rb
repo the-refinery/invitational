@@ -5,6 +5,8 @@ module Invitational
     included do
       belongs_to :invitable, :polymorphic => true
 
+      before_create :setup_hash
+
       validates :email,  :presence => true
       validates :role,  :presence => true
       validates :invitable,  :presence => true, :if => :standard_role?
@@ -78,13 +80,9 @@ module Invitational
       super user
     end
 
-    def save(*)
-      if id.nil?
-        self.date_sent = DateTime.now
-        self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
-      end
-
-      super
+    def setup_hash
+      self.date_sent = DateTime.now
+      self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
     end
 
     def role_title
