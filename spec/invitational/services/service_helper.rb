@@ -29,7 +29,7 @@ def invite_by_email email, entity, role
 end
 
 def invite_user user, entity, role
-  invitation = Invitation.new(email: user.email, invitable: entity, role: role, user: user)
+  invitation = Invitation.new(email: user.email, invitable: entity, role: role, user: user, date_accepted: DateTime.now)
   invitation.save
 
   invitation

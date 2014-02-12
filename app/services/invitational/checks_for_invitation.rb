@@ -2,13 +2,13 @@ module Invitational
   class ChecksForInvitation
 
     def self.for user, invitable, roles=nil
-      self.uber_admin?(user) || self.specific_invite?(user, invitable, roles)
+      self.uberadmin?(user) || self.specific_invite?(user, invitable, roles)
     end
 
 private 
 
-    def self.uber_admin? user
-      user.invitations.uber_admin.count == 1
+    def self.uberadmin? user
+      user.invitations.uberadmin.count == 1
     end
 
     def self.specific_invite? user, invitable, roles

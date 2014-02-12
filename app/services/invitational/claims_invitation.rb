@@ -13,6 +13,7 @@ module Invitational
       end
 
       invitation.user = user
+      invitation.date_accepted = DateTime.now
       invitation.save
 
       invitation

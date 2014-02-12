@@ -5,11 +5,13 @@ module Invitational
     included do
       belongs_to :invitable, :polymorphic => true
 
+      before_create :setup_hash
+
       validates :email,  :presence => true
       validates :role,  :presence => true
       validates :invitable,  :presence => true, :if => :standard_role?
 
-      scope :uber_admin, lambda {
+      scope :uberadmin, lambda {
         where("invitable_id IS NULL AND role = 'uberadmin'")
       }
 
@@ -53,6 +55,11 @@ module Invitational
 
     end
 
+    def setup_hash
+      self.date_sent = DateTime.now
+      self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
+    end
+
     def standard_role?
       role != :uberadmin
     end
@@ -68,39 +75,20 @@ module Invitational
       role
     end
 
-    def user= user
-      if user.nil?
-        self.date_accepted = nil
-      else
-        self.date_accepted = DateTime.now
-      end
-
-      super user
-    end
-
-    def save(*)
-      if id.nil?
-        self.date_sent = DateTime.now
-        self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
-      end
-
-      super
-    end
-
     def role_title
-      if uber_admin?
+      if uberadmin?
         "Uber Admin"
       else
         role.to_s.titleize
       end
     end
 
-    def uber_admin?
+    def uberadmin?
       invitable.nil? == true && role == :uberadmin
     end
 
     def claimed?
-      user.nil? == false
+      date_accepted.nil? == false
     end
 
     def unclaimed?

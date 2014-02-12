@@ -17,6 +17,17 @@ describe Invitational::Invitation do
   Given (:claimed) {invite_user user2, entity2, :admin}
   Given (:uber_admin) {invite_uber_admin user3}
 
+  context "Initialization" do
+    context "Creates Claim hash and date sent on creation" do
+      Given(:new_invite) {Invitation.new(email: "test999@d-i.co", invitable: entity1, role: :user)}
+
+      When {new_invite.save}
+
+      Then {new_invite.claim_hash.should_not be_nil}
+      And  {new_invite.date_sent.should_not be_nil}
+    end
+  end
+
   context "Role Title" do
     context "Standard Role" do
       Then {unclaimed.role_title.should == "User"}
@@ -29,12 +40,12 @@ describe Invitational::Invitation do
 
   context "Type" do
     context "Standard Role" do
-      Then {unclaimed.uber_admin?.should_not be_true}
-      And  {claimed.uber_admin?.should_not be_true}
+      Then {unclaimed.uberadmin?.should_not be_true}
+      And  {claimed.uberadmin?.should_not be_true}
     end
 
     context "Uber Admin" do
-      Then {uber_admin.uber_admin?.should be_true}
+      Then {uber_admin.uberadmin?.should be_true}
     end
   end
 
