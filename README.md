@@ -175,6 +175,12 @@ rake invitational:create_uberadmin
 
 This will output the claim hash for a new UberAdmin invitation.
 
+You can test to see if the a user is an uberadmin through:
+
+```
+current_user.uberadmin?
+```
+
 ##CanCan
 
 Invitational adds a new condition key to CanCan's abilities, `:role`. This allows you to define the role(s)
