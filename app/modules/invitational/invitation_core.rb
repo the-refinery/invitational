@@ -55,6 +55,11 @@ module Invitational
 
     end
 
+    def setup_hash
+      self.date_sent = DateTime.now
+      self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
+    end
+
     def standard_role?
       role != :uberadmin
     end
@@ -70,21 +75,6 @@ module Invitational
       role
     end
 
-    def user= user
-      if user.nil?
-        self.date_accepted = nil
-      else
-        self.date_accepted = DateTime.now
-      end
-
-      super user
-    end
-
-    def setup_hash
-      self.date_sent = DateTime.now
-      self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
-    end
-
     def role_title
       if uberadmin?
         "Uber Admin"
@@ -98,7 +88,7 @@ module Invitational
     end
 
     def claimed?
-      user.nil? == false
+      date_accepted.nil? == false
     end
 
     def unclaimed?

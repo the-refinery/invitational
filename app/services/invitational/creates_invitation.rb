@@ -3,7 +3,6 @@ module Invitational
 
     def self.for invitable, target, role
       if target.is_a? String
-        user = nil
         email = target
 
         if invitable.invitations.for_email(email).count > 0
@@ -20,7 +19,10 @@ module Invitational
       end
 
       invitation = ::Invitation.new(invitable: invitable, role: role, email: email)
-      invitation.user = user
+      if user
+        invitation.user = user
+        invitation.date_accepted = DateTime.now
+      end
       invitation.save
 
       invitation
