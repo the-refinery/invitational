@@ -11,6 +11,7 @@ describe Ability do
   Given(:entity1) { setup_entity "Test entity 1"}
   Given(:entity2) { setup_entity "Test entity 2"}
   Given(:child1) {setup_child "Child 1", entity2}
+  Given(:other_entity) { setup_other_entity "Test other entity"}
 
   Given {invite_user user1, entity1, :user}
   Given {invite_user user2, entity2, :admin}
@@ -36,10 +37,17 @@ describe Ability do
 
   context "Uber Admin" do
     Given (:i) { Ability.new(user3) }
-    When (:role) {:uber_admin}
+    When (:role) {:uberadmin}
 
     Then { i.should be_able_to(:manage, entity1) }
     And { i.should be_able_to(:manage, entity2) }
+  end
+
+  context "Uber Admin only permissions" do
+    Given (:i) { Ability.new(user3) }
+    When (:role) {:uberadmin}
+
+    Then { i.should be_able_to(:manage, other_entity) }
   end
 
   context "Cascading Permissions" do
