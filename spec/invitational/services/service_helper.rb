@@ -21,6 +21,13 @@ def setup_child name, entity
   child
 end
 
+def setup_other_entity name
+  other_entity = OtherEntity.new(name: name)
+  other_entity.save
+
+  other_entity
+end
+
 def invite_by_email email, entity, role
   invitation = Invitation.new(email: email, invitable: entity, role: role)
   invitation.save

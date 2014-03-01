@@ -16,4 +16,9 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
+  create_table :other_entities, force: true do |t|
+    t.string :name
+    t.timestamps
+  end
+
 end

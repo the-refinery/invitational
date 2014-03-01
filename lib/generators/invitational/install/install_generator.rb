@@ -5,10 +5,6 @@ module Invitational
 
       argument :identity_class, type: :string, default: "User", banner: "Class name of identity model (e.g. User)"
 
-      def add_to_gemfile
-        gem "cancan"
-      end
-
       def invitation_model
         @identity_class = identity_class.gsub(/\,/,"").camelize
 

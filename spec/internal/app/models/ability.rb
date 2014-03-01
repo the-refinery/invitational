@@ -18,6 +18,8 @@ class Ability
 
     can :manage, Child, roles: [:admin, attribute_roles(:entity, [:admin, :user]) ]
 
+    can :manage, OtherEntity, roles: [:uberadmin]
+
   end
 
 end
