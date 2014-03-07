@@ -19,9 +19,9 @@ gem "jquery-rails"
 #gem 'strong_parameters'
 
 group :test do
+  gem 'cancancan'
   gem 'activerecord'
   gem 'actionpack' # action_controller, action_view
   gem 'sprockets'
   gem 'rspec-given'
-  gem 'cancan'
 end

@@ -37,12 +37,6 @@ The generator will add a database migration you will need to run:
 rake db:migrate
 ```
 
-You will also need to run bundle install again, as the generator will add the cancan gem to your gemfile
-
-```
-bundle install
-```
-
 #Implementation
 
 ##invited_to
