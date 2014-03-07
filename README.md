@@ -15,7 +15,7 @@ An invitation is initially created in an un-claimed state.  The invitation is as
 Invitational works with Rails 4.0 and up.  You can add it to your Gemfile with:
 
 ```
-gem 'invitational', git: 'git@github.com:d-i/invitational.git'
+gem 'invitational'
 ```
 
 Run the bundle command to install it.
