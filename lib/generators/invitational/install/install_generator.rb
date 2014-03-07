@@ -17,6 +17,10 @@ module Invitational
         template "invitation.rb", "app/models/invitation.rb"
       end
 
+      def add_to_gemfile
+        gem "cancancan"
+      end
+
       def ability_model
         @identity_model = @identity_class.underscore
         template "ability.rb", "app/models/ability.rb"
