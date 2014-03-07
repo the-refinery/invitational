@@ -1,6 +1,8 @@
+[![Gem Version](https://badge.fury.io/rb/invitational.png)](http://badge.fury.io/rb/invitational)
+
 #Overview
 
-The purpose of Invitational is to eliminate the tight coupling between user identity/authentication and application authorization.  It is a common pattern in multi-user systems that in order to grant access to someone else, an existing administrator must create a user account, providing a username and password, and then grant permissions to that account.  The administrator then needs to communicate the username and password to the individual, often via email.  The complexity of this process is compounded in multi-account based systems where a single user might wind up with mutiple user accounts with various usernames and passwords.
+The purpose of Invitational is to eliminate the tight coupling between user identity/authentication and application functional authorization.  It is a common pattern in multi-user systems that in order to grant access to someone else, an existing administrator must create a user account, providing a username and password, and then grant permissions to that account.  The administrator then needs to communicate the username and password to the individual, often via email.  The complexity of this process is compounded in multi-account based systems where a single user might wind up with mutiple user accounts with various usernames and passwords.
 
 Inspired by 37Signals' single sign-on process for Basecamp, Invitational provides an intermediate layer between an identity model (i.e. User) and some entity to which authorization is given.  This intermediate layer, an Invitation, represents a granted role for a given entity.  These roles can then be leveraged by the application's functional authorization system.
 
