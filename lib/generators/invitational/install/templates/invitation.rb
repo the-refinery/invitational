@@ -4,4 +4,6 @@ class Invitation < ActiveRecord::Base
 
   belongs_to :user<%= @custom_user_class %>
 
+  accepts_system_roles_as
+
 end

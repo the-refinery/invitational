@@ -4,4 +4,7 @@ class Invitation < ActiveRecord::Base
 
   belongs_to :user
 
+  accepts_system_roles_as :employer, :consultant
+
+
 end

@@ -37,6 +37,12 @@ module Invitational
 
       scope :pending, lambda { where('user_id IS NULL') }
       scope :claimed, lambda { where('user_id IS NOT NULL') }
+
+      @system_roles = Array.new
+
+      def self.system_roles
+        @system_roles
+      end
     end
 
     module ClassMethods
@@ -50,6 +56,16 @@ module Invitational
 
       def invite_uberadmin target
         Invitational::CreatesUberAdminInvitation.for target
+      end
+
+      def accepts_system_roles_as *args
+        args.each do |role|
+          relation = role.to_s.pluralize.to_sym
+
+          scope relation, -> {where("invitable_id IS NULL AND role = '#{role.to_s}'")}
+
+          self.system_roles << role
+        end
       end
 
     end
