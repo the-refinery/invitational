@@ -6,6 +6,8 @@ describe User do
 
   Given(:user1) { setup_user "test1@d-i.co" }
   Given(:user2) { setup_user "test2@d-i.co" }
+  Given(:user3) { setup_user "test2@d-i.co" }
+
   Given(:entity1) { setup_entity "Test entity 1"}
 
   context 'invited_to creates a has_many_through relationship' do
@@ -27,6 +29,20 @@ describe User do
 
       Then {user1.uberadmin?.should_not be_true}
       end
+  end
+
+  context 'checks to see if a user is invited to a given system role' do
+    context 'when an invited' do
+      When {invite_system_role user2, :employer}
+
+      Then {user2.invited_to_system?(:employer).should be_true}
+    end
+
+    context 'when not invited' do
+      When {invite_user user1, entity1, :admin}
+
+      Then {user1.invited_to_system?(:employer).should_not be_true}
+    end
   end
 
   context 'checks to see if a user is invited to a given entity' do

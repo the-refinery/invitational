@@ -8,6 +8,7 @@ describe Invitational::Invitation do
   Given(:user2) { setup_user "test2@d-i.co" }
   Given(:user3) { setup_user "test3@d-i.co" }
   Given(:user4) { setup_user "test4@d-i.co" }
+  Given(:user5) { setup_user "test5@d-i.co" }
 
   Given(:entity1) { setup_entity "Test entity 1"}
   Given(:entity2) { setup_entity "Test entity 2"}
@@ -106,6 +107,37 @@ describe Invitational::Invitation do
       When (:result) {Invitation.invite_uberadmin user4}
 
       Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
+    end
+
+    context "Invites to System Role" do
+      context "By email" do
+        When (:result) {Invitation.invite_system_user user4.email, :employer}
+
+        Then  {result.should_not be_nil}
+        And   {result.invitable.should be_nil}
+        And   {result.email.should == user4.email}
+        And   {result.role.should == :employer }
+        And   {result.unclaimed?.should be_true}
+      end
+
+      context "Existing user" do
+        When (:result) {Invitation.invite_system_user user4, :employer}
+
+        Then  {result.should_not be_nil}
+        And   {result.invitable.should be_nil}
+        And   {result.email.should == user4.email}
+        And   {result.role.should == :employer}
+        And   {result.claimed?.should be_true}
+        And   {result.user.should == user4 }
+      end
+
+      context "When already invited" do
+        Given {invite_system_role user4, :employer}
+
+        When (:result) {Invitation.invite_system_user user4, :employer}
+
+        Then  { expect(result).to have_failed(Invitational::AlreadyInvitedError) }
+      end
     end
   end
 

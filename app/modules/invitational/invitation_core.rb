@@ -35,6 +35,10 @@ module Invitational
         where('role = ?', role.to_s)
       }
 
+      scope :for_system_role, lambda {|role|
+        where('invitable_id IS NULL AND role = ?', role.to_s)
+      }
+
       scope :pending, lambda { where('user_id IS NULL') }
       scope :claimed, lambda { where('user_id IS NOT NULL') }
 
@@ -58,6 +62,10 @@ module Invitational
         Invitational::CreatesUberAdminInvitation.for target
       end
 
+      def invite_system_user target, role
+        Invitational::CreatesSystemUserInvitation.for target, role
+      end
+
       def accepts_system_roles_as *args
         args.each do |role|
           relation = role.to_s.pluralize.to_sym
@@ -76,7 +84,8 @@ module Invitational
     end
 
     def standard_role?
-      role != :uberadmin
+      roles = Invitation.system_roles + [:uberadmin]
+      !roles.include?(role)
     end
 
     def role

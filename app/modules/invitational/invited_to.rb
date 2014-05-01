@@ -25,5 +25,9 @@ module Invitational
       Invitational::ChecksForInvitation.for self, entity,role
     end
 
+    def invited_to_system? role
+      invitations.for_system_role(role).count > 0
+    end
+
   end
 end

@@ -49,6 +49,13 @@ def invite_uber_admin user
   invitation
 end
 
+def invite_system_role user, role
+  invitation = Invitation.new(email: user.email, role: role, user: user)
+  invitation.save
+
+  invitation
+end
+
 def no_invitations_exist
   Invitation.destroy_all
 end
