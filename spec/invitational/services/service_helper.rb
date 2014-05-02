@@ -28,6 +28,13 @@ def setup_other_entity name
   other_entity
 end
 
+def setup_system_thing name
+  system_thing = SystemThing.new(name: name)
+  system_thing.save
+
+  system_thing
+end
+
 def invite_by_email email, entity, role
   invitation = Invitation.new(email: email, invitable: entity, role: role)
   invitation.save

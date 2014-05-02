@@ -20,5 +20,10 @@ ActiveRecord::Schema.define do
     t.string :name
     t.timestamps
   end
+  
+  create_table :system_things, force: true do |t|
+    t.string :name
+    t.timestamps
+  end
 
 end

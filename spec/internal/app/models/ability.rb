@@ -20,6 +20,7 @@ class Ability
 
     can :manage, OtherEntity, roles: [:uberadmin]
 
+    can :manage, SystemThing, roles: [system_roles(:employer)]
   end
 
 end
