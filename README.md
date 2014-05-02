@@ -4,7 +4,7 @@
 
 The purpose of Invitational is to eliminate the tight coupling between user identity/authentication and application functional authorization.  It is a common pattern in multi-user systems that in order to grant access to someone else, an existing administrator must create a user account, providing a username and password, and then grant permissions to that account.  The administrator then needs to communicate the username and password to the individual, often via email.  The complexity of this process is compounded in multi-account based systems where a single user might wind up with mutiple user accounts with various usernames and passwords.
 
-Inspired by 37Signals' single sign-on process for Basecamp, Invitational provides an intermediate layer between an identity model (i.e. User) and some entity to which authorization is given.  This intermediate layer, an Invitation, represents a granted role for a given entity.  These roles can then be leveraged by the application's functional authorization system.
+Inspired by 37Signals' single sign-on process for Basecamp, Invitational provides an intermediate layer between an identity model (i.e. User) and either the system as a whole or some specific entity to which authorization is given.  This intermediate layer, an Invitation, represents a granted role for the sytem or a given entity.  These roles can then be leveraged by the application's functional authorization system.
 
 Invitational supplies a custom DSL on top of the CanCan gem to provide an easy implementation of role-based functional authorization.  This DSL supports the hierarchical model common in many systems.  Permissions can be esablished for a child based upon an invitation to its parent (or grandparent, etc).
 
@@ -38,6 +38,21 @@ The generator will add a database migration you will need to run:
 ```
 rake db:migrate
 ```
+
+#Types of Invitations
+Invitational has three types of invitations:
+
+##Entity
+An `Entity` invitation, as the name imples, is for a specific entity within the system.  For example, in a contract management system, a user might be invited to a 
+contract in the sytem with the role of 'Recipient' .  They might then be able to read and to mark that specific contract as signed, but not access any other contracts in the system.
+
+##System
+A `System` invitation is not related to a specific entity, but to the system overall. For example, in the contract management system mentioned above, another user might be 
+invited to the sytem with the role of 'contract_manager'.  They might then be able to manage *all* contracts within the system, but not have authority to invite other users.
+
+##UberAdmin
+An `UberAdmin` invitation is also, like a `System` invitation, not related to a specific entity but to the system overall.  Unlike a `System` invitation, an `UberAdmin` invitation
+effectively grants the associated user access to all parts of the system, as every inquiry for the existance of an invitation (either System or Entity) will indicate true.
 
 #Implementation
 
@@ -84,9 +99,24 @@ entity.admins
 
 You can then add this entity to the list of invitable classes on the `invited_to` call in your identity class.
 
+##accepts_system_roles_as
+System roles are defined in the `Invitation` class. Simply add the list of system roles to the class method that has been defined for you by the 
+generator:
+
+```
+accepts_system_roles_as :contract_manager, :bookkeeper
+```
+
+The `accepts_system_roles_as` method also sets up scopes on `Invitation` for each identified role:
+
+```
+License.contract_managers
+License.bookkeepers
+```
+
 #Usage
 ##Creating Invitations
-To create an invitation to a given model:
+To create an entity invitation to a given model:
 
 ```
 entity = Entity.find(1)
@@ -94,9 +124,16 @@ entity = Entity.find(1)
 entity.invite "foo@bar.com", :admin
 ```
 
-The method will return the Invitation.  In the event that the email has already been invited to that entity, 
+To create an invitation to a system role:
+
+```
+Invitation.invite_system_user "foo@bar.com", :contract_manager
+```
+
+The method will return the Invitation.  In the event that the email has already been invited to that entity or to the system role, 
 an `Invitational::AlreadyInvitedError` will be raised.  If the passed role is not valid for the given entity (based on its 
-`accepts_invitation_as` call), an `Invitational::InvalidRoleError` will be raised.
+`accepts_invitation_as` call) or not a valid system role, an `Invitational::InvalidRoleError` will be raised.
+
 
 ###Immediately Claimed Invitations
 
@@ -110,6 +147,13 @@ entity = Entity.create(...)
 
 entity.invite current_user, :admin
 ```
+
+and
+
+```
+Invitation.invite_system_user current_user, :contract_manager
+```
+
 
 ##Claiming Invitations
 
@@ -141,11 +185,17 @@ current_user.invited_to? entity, :admin
 
 Will only return true if the current user has accepted an invitation as an Admin to the entity.
 
+For system roles, the `invited_to_system?` instance method on your identity class can be used:
+
+```
+current_user.invited_to_system? :contract_manager
+```
+
 ##UberAdmin
 
 Invitational provides a special, system-wide, invitation and role called `:uberadmin`.  A user that has
 claimed an UberAdmin invitation will always indicate they have been invited to a given role for a given entity.  
-In other words, every call to `invited_to?` for an UberAdmin will return true.  
+In other words, every call to `invited_to?` or `invited_to_system?` for an UberAdmin will return true.  
 
 To create an UberAdmin invitation:
 
@@ -188,6 +238,14 @@ invited to a staff role can only read the parent entity, in your `ability.rb` fi
 can :manage, Parent, roles: [:admin]
 can :read, Parent, roles: [:staff]
 ```
+
+###System Roles
+To specify system roles for a given ability, utilize the `system_roles` method inside a `roles:` array:
+
+```
+can :manage, contract, roles: [system_roles(:contract_manager, :sales_manager)]
+```
+
 
 ###Invitation to a parent
 To idenfitify abilities based upon invitations to a parent entity, add a hash as an element to the roles array, 
