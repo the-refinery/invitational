@@ -17,6 +17,7 @@ class Ability
     can :read, Child
 
     can :manage, Child, roles: [:admin, attribute_roles(:entity, [:admin, :user]) ]
+    can :manage, Child, roles: [attribute_roles([:entity, :grandparent], [:admin]) ]
 
     can :manage, OtherEntity, roles: [:uberadmin]
 

@@ -22,7 +22,11 @@ module Invitational
           role_type = subject
         end
 
-        role_mappings[key] = roles
+        unless role_mappings.has_key?(key)
+          role_mappings[key] = []
+        end
+
+        role_mappings[key] += roles
 
         block = ->(model){
           roles = role_mappings[key]
@@ -76,7 +80,20 @@ module Invitational
       end
 
       def attribute_roles attribute, roles
-        {attribute => roles}
+        hash = nil
+        if attribute.respond_to? :each
+          attribute.reverse.each do |attr|
+            if hash.nil?
+              hash = {attr => roles}
+            else
+              hash = {attr => hash}
+            end
+          end
+        else
+          hash = {attribute => roles}
+        end
+
+        hash
       end
 
       def system_roles roles

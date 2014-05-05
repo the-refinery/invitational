@@ -21,6 +21,16 @@ def setup_child name, entity
   child
 end
 
+def setup_grandparent name, entity
+  grandparent = Grandparent.new(name: name)
+  grandparent.save
+
+  grandparent.entities << entity
+
+
+  grandparent
+end
+
 def setup_other_entity name
   other_entity = OtherEntity.new(name: name)
   other_entity.save

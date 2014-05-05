@@ -5,8 +5,14 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
+  create_table :grandparents, force: true do |t|
+    t.string :name
+    t.timestamps
+  end
+
   create_table :entities, force: true do |t|
     t.string :name
+    t.integer :grandparent_id
     t.timestamps
   end
 

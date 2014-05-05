@@ -247,29 +247,41 @@ can :manage, contract, roles: [system_roles(:contract_manager, :sales_manager)]
 ```
 
 
-###Invitation to a parent
-To idenfitify abilities based upon invitations to a parent entity, add a hash as an element to the roles array, 
-supplying the parent attribute name as a key, and an allowed roles array as the value:
+###Invitation to a parent (or other attribute)
+To idenfitify abilities based upon invitations to a parent entity or other attribute, Invitational provides an
+```attribute_roles``` method.  The first argument is symbol indicating the attribute name of the parent entity, 
+the second is an array of roles in which the user must be invited to the parent entity:
 
 ```
-can :manage, Child, roles[ {parent: [:admin, :staff]}]
+can :manage, Child, roles[attribute_roles(:parent, [:admin, :staff])]
 ```
 
-The parent invitation can be used recursively too, to specify grand-parent (or above) relationships:
+To reference invitations on a "grand parent" (or higher) entity, ```attribute_roles``` optionally accepts
+an array as the first parameter, indicating the "path" to the target entity.
+
+To indicate that an invitation to the grandparent found here:
 
 ```
-can :manage, Child, roles[ {parent: {grand_parent: [:admin, :staff]}}]
+entity = Entity.first
+
+entity.parent.grandparent
+```
+
+Pass the following as the first attribute:
+
+```
+can :manage, Child, roles[attribute_roles([:parent, :grandparent],  [:admin])]
 ```
 
 To specify child and parent invitations, you can combine them on one line:
 
 ```
-can :manage, Child, roles[:child_admin, {parent: [:admin, :staff]}]
+can :manage, Child, roles[:child_admin, attribute_roles(:parent, [:admin, :staff])]
 ```
 
 However, it is recommended to specify them on separate lines:
 
 ```
 can :manage, Child, roles[:child_admin]
-can :manage, Child, roles[ {parent: [:admin, :staff]}]
+can :manage, Child, roles[attribute_roles(:parent, [:admin, :staff])]
 ```

@@ -8,15 +8,20 @@ describe Ability do
   Given(:user2) { setup_user "test2@d-i.co" }
   Given(:user3) { setup_user "test3@d-i.co" }
   Given(:user4) { setup_user "test4@d-i.co" }
+  Given(:user5) { setup_user "test5@d-i.co" }
 
   Given(:entity1) { setup_entity "Test entity 1"}
   Given(:entity2) { setup_entity "Test entity 2"}
   Given(:child1) {setup_child "Child 1", entity2}
+  Given(:grandparent) {setup_grandparent "A Grandparent", entity2}
+
   Given(:other_entity) { setup_other_entity "Test other entity"}
   Given(:system_thing) { setup_system_thing "A System Object" }
 
   Given {invite_user user1, entity1, :user}
   Given {invite_user user2, entity2, :admin}
+  Given {invite_user user5, grandparent, :admin}
+
   Given {invite_uber_admin user3}
   Given {invite_system_role user4, :employer}
 
@@ -64,10 +69,19 @@ describe Ability do
   end
 
   context "Cascading Permissions" do
-    Given (:i) { Ability.new(user2) }
-    When (:role) {:admin}
+    context "One level" do
+      Given (:i) { Ability.new(user2) }
+      When (:role) {:admin}
 
-    Then {i.should be_able_to(:manage, child1)}
+      Then {i.should be_able_to(:manage, child1)}
+    end
+
+    context "Two levels" do
+      Given (:i) { Ability.new(user5) }
+      When (:role) {:admin}
+
+      Then {i.should be_able_to(:manage, child1)}
+    end
   end
 
   context "Access to everybody" do
