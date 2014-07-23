@@ -7,7 +7,7 @@ module Invitational
           roles = conditions.delete(:roles) if conditions
           conditions = nil if conditions and conditions.empty?
 
-          block ||= setup_role_based_block_for roles, subject, action
+          block ||= setup_role_based_block_for roles, subject, action, false
         end
 
         rules << ::CanCan::Rule.new(true, action, subject, conditions, block)
@@ -18,13 +18,13 @@ module Invitational
           roles = conditions.delete(:roles) if conditions
           conditions = nil if conditions and conditions.empty?
 
-          block ||= setup_role_based_block_for roles, subject, action
+          block ||= setup_role_based_block_for roles, subject, action, true
         end
 
         rules << ::CanCan::Rule.new(false, action, subject, conditions, block)
       end
 
-      def setup_role_based_block_for roles, subject, action
+      def setup_role_based_block_for roles, subject, action, role_specific
         key = subject.name.underscore + action.to_s
 
         if roles.respond_to? :values
@@ -41,35 +41,35 @@ module Invitational
 
         block = ->(model){
           roles = role_mappings[key]
-          check_permission_for model, user, roles
+          check_permission_for model, user, roles, role_specific
         }
 
         block
       end
 
-      def check_permission_for model, user, in_roles
+      def check_permission_for model, user, in_roles, role_specific
 
         in_roles.inject(false) do |result,role|
           result || if role.respond_to? :values
-            check_permission_for_keyed_roles model, user, role
+            check_permission_for_keyed_roles model, user, role, role_specific
           else
-            Invitational::ChecksForInvitation.for(user, model, role)
+            Invitational::ChecksForInvitation.for(user, model, role, role_specific)
           end
         end
 
       end
 
-      def check_permission_for_keyed_roles model, user, role
+      def check_permission_for_keyed_roles model, user, role, role_specific
         key = role.keys.first
 
         if key == :system_roles
-          check_permission_for_system_role user, role
+          check_permission_for_system_role user, role, role_specific
         else
-          check_permission_for_attribute model, user, role
+          check_permission_for_attribute model, user, role, role_specific
         end
       end
 
-      def check_permission_for_system_role user, role
+      def check_permission_for_system_role user, role, role_specific
         roles = role.values.flatten
 
         user.uberadmin? || roles.any? do |system_role|
@@ -77,16 +77,16 @@ module Invitational
         end
       end
 
-      def check_permission_for_attribute model, user, role
+      def check_permission_for_attribute model, user, role, role_specific
         method = role.keys.first
         related = model.send(method)
 
         if related.respond_to? :any?
           related.any? do |model|
-            check_permission_for model, user, role.values.flatten
+            check_permission_for model, user, role.values.flatten, role_specific
           end
         else
-          check_permission_for related, user, role.values.flatten
+          check_permission_for related, user, role.values.flatten, role_specific
         end
       end
 
