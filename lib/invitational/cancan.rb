@@ -13,6 +13,17 @@ module Invitational
         rules << ::CanCan::Rule.new(true, action, subject, conditions, block)
       end
 
+      def cannot(action = nil, subject = nil, conditions = nil, &block)
+        if conditions && conditions.has_key?(:roles)
+          roles = conditions.delete(:roles) if conditions
+          conditions = nil if conditions and conditions.empty?
+
+          block ||= setup_role_based_block_for roles, subject, action
+        end
+
+        rules << ::CanCan::Rule.new(false, action, subject, conditions, block)
+      end
+
       def setup_role_based_block_for roles, subject, action
         key = subject.name.underscore + action.to_s
 
