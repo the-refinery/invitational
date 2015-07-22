@@ -1,6 +1,6 @@
 Description:
-    This generator installs the necessary components for the Invitational gem, and provides the initial relatoinship
-    to your identiy class 
+    This generator installs the necessary components for the Invitational gem, and provides the initial relationship
+    to your identity class 
 
 Example:
     rails generate invitational User
