@@ -114,6 +114,14 @@ License.contract_managers
 License.bookkeepers
 ```
 
+Similarly, the identity model is given scopes for each role:
+
+```
+User.uberadmins # returns users who are uberadmins
+User.contract_managers # returns users with the contract_manager system role
+User.bookkeepers # returns users with the bookkeepers system role
+```
+
 #Usage
 ##Creating Invitations
 To create an entity invitation to a given model:
