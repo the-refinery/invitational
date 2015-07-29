@@ -4,6 +4,10 @@ module Invitational
 
     included do
       has_many :invitations, dependent: :destroy
+
+      Invitation.system_roles.each do |role_name|
+        scope role_name.to_s.pluralize, -> { joins(:invitations).merge Invitation.for_system_role(role_name) }
+      end
     end
 
     module ClassMethods

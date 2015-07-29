@@ -89,5 +89,19 @@ describe User do
     Then {expect(result).to have_failed(ActiveRecord::RecordNotFound)}
   end
 
+  context "creates named scopes for system roles" do
+    context 'when an uberadmin' do
+      When {invite_uber_admin user2}
+      Then {User.uberadmins.should include(user2)}
+      And {User.uberadmins.should_not include(user1)}
+    end
+
+    context 'when an employer' do
+      When {invite_system_role user2, :employer}
+      Then {User.employers.should include(user2)}
+      And {User.employers.should_not include(user1)}
+    end
+  end
+
 end
 
