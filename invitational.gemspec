@@ -7,9 +7,9 @@ require "invitational/version"
 Gem::Specification.new do |s|
   s.name        = "invitational"
   s.version     = Invitational::VERSION
-  s.authors     = ["Dave Goerlich", "Joe Fiorini"]
-  s.email       = ["dave@d-i.co","joe@d-i.co"]
-  s.homepage    = "http://github.com/d-i/invitational"
+  s.authors     = ["Dave Goerlich"]
+  s.email       = ["dave@d-i.co"]
+  s.homepage    = "http://github.com/the-refinery/invitational"
   s.summary     = "Solution that eliminates the tight coupling between user identity/authentication and application functional authorization"
   s.description = "Solution that eliminates the tight coupling between user identity/authentication and application functional authorization"
 

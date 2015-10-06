@@ -16,13 +16,15 @@ private
     end
 
     def self.specific_invite? user, invitable, roles
-      invites = user.invitations.for_invitable(invitable.class.name, invitable.id)
+      unless invitable.nil?
+        invites = user.invitations.for_invitable(invitable.class.name, invitable.id)
 
-      if invites.count > 0
-        unless roles.nil?
-          self.role_check invites.first, roles
-        else
-          true
+        if invites.count > 0
+          unless roles.nil?
+            self.role_check invites.first, roles
+          else
+            true
+          end
         end
       end
     end
