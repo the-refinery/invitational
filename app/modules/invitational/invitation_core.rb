@@ -42,7 +42,7 @@ module Invitational
       scope :pending, lambda { where('user_id IS NULL') }
       scope :claimed, lambda { where('user_id IS NOT NULL') }
 
-      @system_roles = Array.new
+      @system_roles = [:uberadmin]
 
       def self.system_roles
         @system_roles
