@@ -1,4 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/invitational.png)](http://badge.fury.io/rb/invitational)
+[![Build Status](https://travis-ci.org/the-refinery/invitational.svg?branch=master)](https://travis-ci.org/the-refinery/invitational)
 
 #Overview
 
