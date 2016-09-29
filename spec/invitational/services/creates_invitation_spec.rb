@@ -15,7 +15,7 @@ describe Invitational::CreatesInvitation do
       And   {result.invitable.should == entity}
       And   {result.email.should == "test@d-i.co"}
       And   {result.role.should == :admin}
-      And   {result.unclaimed?.should be_true}
+      And   {result.unclaimed?.should be_truthy}
     end
 
     context "when already invited" do
@@ -38,7 +38,7 @@ describe Invitational::CreatesInvitation do
       And   {result.invitable.should == entity}
       And   {result.email.should == "test@d-i.co"}
       And   {result.role.should == :admin}
-      And   {result.claimed?.should be_true}
+      And   {result.claimed?.should be_truthy}
       And   {result.user.should == user }
     end
 

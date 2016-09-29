@@ -12,7 +12,7 @@ describe Invitational::CreatesSystemUserInvitation do
       And   {result.invitable.should be_nil}
       And   {result.email.should == "test@d-i.co"}
       And   {result.role.should == :employer }
-      And   {result.unclaimed?.should be_true}
+      And   {result.unclaimed?.should be_truthy}
     end
 
     context "when already invited" do
@@ -35,7 +35,7 @@ describe Invitational::CreatesSystemUserInvitation do
       And   {result.invitable.should be_nil}
       And   {result.email.should == "test2@d-i.co"}
       And   {result.role.should == :employer}
-      And   {result.claimed?.should be_true}
+      And   {result.claimed?.should be_truthy}
       And   {result.user.should == user }
     end
 

@@ -21,13 +21,13 @@ describe User do
     context 'when an uberadmin' do
       When {invite_uber_admin user2}
 
-      Then {user2.uberadmin?.should be_true}
+      Then {user2.uberadmin?.should be_truthy}
       end
 
     context 'when not an uberadmin' do
       When {invite_user user1, entity1, :admin}
 
-      Then {user1.uberadmin?.should_not be_true}
+      Then {user1.uberadmin?.should_not be_truthy}
       end
   end
 
@@ -35,13 +35,13 @@ describe User do
     context 'when an invited' do
       When {invite_system_role user2, :employer}
 
-      Then {user2.invited_to_system?(:employer).should be_true}
+      Then {user2.invited_to_system?(:employer).should be_truthy}
     end
 
     context 'when not invited' do
       When {invite_user user1, entity1, :admin}
 
-      Then {user1.invited_to_system?(:employer).should_not be_true}
+      Then {user1.invited_to_system?(:employer).should_not be_truthy}
     end
   end
 
@@ -51,13 +51,13 @@ describe User do
       context 'when invited' do
         When {invite_user user1, entity1, :admin}
 
-        Then {user1.invited_to?(entity1).should be_true}
+        Then {user1.invited_to?(entity1).should be_truthy}
       end
 
       context 'when not invited' do
         When {invite_user user2, entity1, :admin}
 
-        Then {user1.invited_to?(entity1).should_not be_true}
+        Then {user1.invited_to?(entity1).should_not be_truthy}
       end
     end
 
@@ -66,15 +66,15 @@ describe User do
       When {invite_user user1, entity1, :admin}
 
       context 'when invited' do
-        Then {user1.invited_to?(entity1, :admin).should be_true}
+        Then {user1.invited_to?(entity1, :admin).should be_truthy}
       end
 
       context 'when not invited' do
-        Then {user2.invited_to?(entity1, :admin).should_not be_true}
+        Then {user2.invited_to?(entity1, :admin).should_not be_truthy}
       end
 
       context 'when invited to a different role' do
-        Then {user1.invited_to?(entity1, :user).should_not be_true}
+        Then {user1.invited_to?(entity1, :user).should_not be_truthy}
       end
     end
 

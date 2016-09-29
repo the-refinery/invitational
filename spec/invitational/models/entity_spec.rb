@@ -21,7 +21,7 @@ describe Entity do
       And   {result.invitable.should == entity}
       And   {result.user.should == user }
       And   {result.role.should == :admin}
-      And   {result.claimed?.should be_true}
+      And   {result.claimed?.should be_truthy}
     end
 
     context "Users cannot be invited again if they are already invited" do

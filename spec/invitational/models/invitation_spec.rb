@@ -41,24 +41,24 @@ describe Invitational::Invitation do
 
   context "Type" do
     context "Standard Role" do
-      Then {unclaimed.uberadmin?.should_not be_true}
-      And  {claimed.uberadmin?.should_not be_true}
+      Then {unclaimed.uberadmin?.should_not be_truthy}
+      And  {claimed.uberadmin?.should_not be_truthy}
     end
 
     context "Uber Admin" do
-      Then {uber_admin.uberadmin?.should be_true}
+      Then {uber_admin.uberadmin?.should be_truthy}
     end
   end
 
   context "Claim Status" do
     context "Unclaimed" do
-      Then {unclaimed.claimed?.should_not be_true}
-      And  {unclaimed.unclaimed?.should be_true}
+      Then {unclaimed.claimed?.should_not be_truthy}
+      And  {unclaimed.unclaimed?.should be_truthy}
     end
 
     context "Claimed" do
-      Then {claimed.claimed?.should be_true}
-      And  {claimed.unclaimed?.should_not be_true}
+      Then {claimed.claimed?.should be_truthy}
+      And  {claimed.unclaimed?.should_not be_truthy}
     end
   end
 
@@ -87,7 +87,7 @@ describe Invitational::Invitation do
       And   {result.invitable.should be_nil}
       And   {result.email.should == user4.email}
       And   {result.role.should == :uberadmin }
-      And   {result.unclaimed?.should be_true}
+      And   {result.unclaimed?.should be_truthy}
     end
 
     context "Existing user" do
@@ -97,7 +97,7 @@ describe Invitational::Invitation do
       And   {result.invitable.should be_nil}
       And   {result.email.should == user4.email}
       And   {result.role.should == :uberadmin}
-      And   {result.claimed?.should be_true}
+      And   {result.claimed?.should be_truthy}
       And   {result.user.should == user4 }
     end
 
@@ -117,7 +117,7 @@ describe Invitational::Invitation do
         And   {result.invitable.should be_nil}
         And   {result.email.should == user4.email}
         And   {result.role.should == :employer }
-        And   {result.unclaimed?.should be_true}
+        And   {result.unclaimed?.should be_truthy}
       end
 
       context "Existing user" do
@@ -127,7 +127,7 @@ describe Invitational::Invitation do
         And   {result.invitable.should be_nil}
         And   {result.email.should == user4.email}
         And   {result.role.should == :employer}
-        And   {result.claimed?.should be_true}
+        And   {result.claimed?.should be_truthy}
         And   {result.user.should == user4 }
       end
 

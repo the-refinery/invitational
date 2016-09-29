@@ -16,13 +16,13 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["{spec}/**/*"]
 
-  s.add_dependency "rails", "~> 4.0"
+  s.add_dependency "rails", "> 4.0"
   s.add_dependency "cancancan", "~> 1.13"
 
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "capybara", "~> 2.0.2"
   s.add_development_dependency "combustion"
-  s.add_development_dependency "rspec", "~> 2.12.0"
-  s.add_development_dependency "rspec-rails", "~> 2.12.0"
-  s.add_development_dependency "rspec-given", "~> 2.3.0"
+  s.add_development_dependency "capybara"
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "rspec-given"
 end

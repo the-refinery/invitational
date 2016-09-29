@@ -14,5 +14,6 @@ require 'capybara/rails'
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
+  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
 end
 
