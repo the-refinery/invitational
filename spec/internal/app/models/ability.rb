@@ -13,6 +13,7 @@ class Ability
 
     can :manage, Entity, roles: [:admin]
     can :read, Entity, roles: [:user]
+    can :validate, Entity, roles: [:*]
 
     can :read, Child
 

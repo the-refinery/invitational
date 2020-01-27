@@ -43,6 +43,17 @@ describe Ability do
     And { i.should_not be_able_to(:read, entity1) }
   end
 
+  context "Any Role (wildcard)" do
+    Given (:user) { Ability.new(user1) }
+    Given (:admin) { Ability.new(user2) }
+    When (:role) {:*}
+
+    Then { user.should be_able_to(:validate, entity1) }
+    And { user.should_not be_able_to(:validate, entity2) }
+    And { admin.should be_able_to(:validate, entity2) }
+    And { admin.should_not be_able_to(:validate, entity1) }
+  end
+
   context "System - Employer" do
     Given (:i) { Ability.new(user4) }
     When (:role) {:employer}

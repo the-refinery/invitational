@@ -240,7 +240,7 @@ current_user.uberadmin?
 
 Invitational adds a new condition key to CanCanCan's abilities, `:role`. This allows you to define the role(s)
 that a user must be invited into for a specific entity in order to perform the specified action.  For example, 
-to indicate that a user invited to a parent entity in an admin role can manage the parent entity, but a user 
+to indicate that a user invited to a Parent entity in an admin role can manage the parent entity, but a user 
 invited to a staff role can only read the parent entity, in your `ability.rb` file:
 
 ```
@@ -248,6 +248,15 @@ can :manage, Parent, roles: [:admin]
 can :read, Parent, roles: [:staff]
 cannot :edit, Parent, roles: [:consultant]
 ```
+
+### Wildcard Roles
+Often is is neccessary to indicate that a user invited in any role has a given permission.  For example, to 
+indicate that any user invited to a Parent entity can view that Parent, regardless of their role:
+
+```
+can :view, Parent, roles: [:*]
+```
+
 
 ### System Roles
 To specify system roles for a given ability, utilize the `system_roles` method inside a `roles:` array:

@@ -53,6 +53,8 @@ module Invitational
         in_roles.inject(false) do |result,role|
           result || if role.respond_to? :values
             check_permission_for_keyed_roles model, user, role, role_specific
+          elsif role == :*
+            Invitational::ChecksForInvitation.for(user, model)
           else
             Invitational::ChecksForInvitation.for(user, model, role, role_specific)
           end
