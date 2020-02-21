@@ -44,11 +44,11 @@ rake db:migrate
 Invitational has three types of invitations:
 
 ## Entity
-An `Entity` invitation, as the name imples, is for a specific entity within the system.  For example, in a contract management system, a user might be invited to a 
+An `Entity` invitation, as the name imples, is for a specific entity within the system.  For example, in a contract management system, a user might be invited to a
 contract in the sytem with the role of 'Recipient' .  They might then be able to read and to mark that specific contract as signed, but not access any other contracts in the system.
 
 ## System
-A `System` invitation is not related to a specific entity, but to the system overall. For example, in the contract management system mentioned above, another user might be 
+A `System` invitation is not related to a specific entity, but to the system overall. For example, in the contract management system mentioned above, another user might be
 invited to the sytem with the role of 'contract_manager'.  They might then be able to manage *all* contracts within the system, but not have authority to invite other users.
 
 ## UberAdmin
@@ -58,9 +58,9 @@ effectively grants the associated user access to all parts of the system, as eve
 # Implementation
 
 ## invited_to
-The generator will setup your identity model (`User`) to include the `Invitational::InvitedTo` module.  As part of the Invitational 
-functionality it provides, the `invited_to` method is added to your user class along with the foundational has_many relationship to 
-Invitation.  This method accepts a list of the entity classes (as symbols) 
+The generator will setup your identity model (`User`) to include the `Invitational::InvitedTo` module.  As part of the Invitational
+functionality it provides, the `invited_to` method is added to your user class along with the foundational has_many relationship to
+Invitation.  This method accepts a list of the entity classes (as symbols)
 to which a user can be invited:
 
 ```
@@ -82,7 +82,7 @@ To configure an entity as able to accept invitations, use the `make_invitable` g
 rails generate invitational:make_invitable MODEL, ROLE1, ROLE2...
 ```
 
-Here, replace MODEL with the name of the entity class you are making invitable.  Replace, ROLE1, ROLE2 with the 
+Here, replace MODEL with the name of the entity class you are making invitable.  Replace, ROLE1, ROLE2 with the
 list of roles which are valid to this model, for example User, Admin.  The generator will include the `Invitational::AcceptsInvitationAs`
 module, and will pre-populate the call to the `accepts_invitation_as` method with the list of roles supplied:
 
@@ -101,7 +101,7 @@ entity.admins
 You can then add this entity to the list of invitable classes on the `invited_to` call in your identity class.
 
 ## accepts_system_roles_as
-System roles are defined in the `Invitation` class. Simply add the list of system roles to the class method that has been defined for you by the 
+System roles are defined in the `Invitation` class. Simply add the list of system roles to the class method that has been defined for you by the
 generator:
 
 ```
@@ -139,8 +139,8 @@ To create an invitation to a system role:
 Invitation.invite_system_user "foo@bar.com", :contract_manager
 ```
 
-The method will return the Invitation.  In the event that the email has already been invited to that entity or to the system role, 
-an `Invitational::AlreadyInvitedError` will be raised.  If the passed role is not valid for the given entity (based on its 
+The method will return the Invitation.  In the event that the email has already been invited to that entity or to the system role,
+an `Invitational::AlreadyInvitedError` will be raised.  If the passed role is not valid for the given entity (based on its
 `accepts_invitation_as` call) or not a valid system role, an `Invitational::InvalidRoleError` will be raised.
 
 
@@ -172,14 +172,14 @@ Invitations can be claimed by passing their hash and the claiming user to the `c
 Invitation.claim claim_hash, current_user
 ```
 
-The method will return the claimed Invitation. In the event that the hash does match an existing invitation, 
-an `Invitational::InvitationNotFoundError` will be raised.  If the hash is found, but the invitation has already 
+The method will return the claimed Invitation. In the event that the hash does match an existing invitation,
+an `Invitational::InvitationNotFoundError` will be raised.  If the hash is found, but the invitation has already
 been claimed, an `Invitational::AlreadyClaimedError` will be raised.
 
 ## Checking for Invitations
 
-The `invited_to?` instance method that Invitational adds to your identity class provides an easy interface to 
-check if a user has an accepted invitation to a specific entity.  Your query can be general (invited in any role) or 
+The `invited_to?` instance method that Invitational adds to your identity class provides an easy interface to
+check if a user has an accepted invitation to a specific entity.  Your query can be general (invited in any role) or
 specifically for a supplied role:
 
 ```
@@ -203,8 +203,8 @@ current_user.invited_to_system? :contract_manager
 ## UberAdmin
 
 Invitational provides a special, system-wide, invitation and role called `:uberadmin`.  A user that has
-claimed an UberAdmin invitation will always indicate they have been invited to a given role for a given entity.  
-In other words, every call to `invited_to?` or `invited_to_system?` for an UberAdmin will return true.  
+claimed an UberAdmin invitation will always indicate they have been invited to a given role for a given entity.
+In other words, every call to `invited_to?` or `invited_to_system?` for an UberAdmin will return true.
 
 To create an UberAdmin invitation:
 
@@ -221,7 +221,7 @@ Invitation.invite_uberadmin current_user
 
 The process to claim an UberAdmin invitation is the same as any other invitation.
 
-To make getting started with a brand new Invitational based environment easier, a rake task is provided to 
+To make getting started with a brand new Invitational based environment easier, a rake task is provided to
 create a new UberAdmin invitation.
 
 ```
@@ -239,8 +239,8 @@ current_user.uberadmin?
 ## CanCanCan
 
 Invitational adds a new condition key to CanCanCan's abilities, `:role`. This allows you to define the role(s)
-that a user must be invited into for a specific entity in order to perform the specified action.  For example, 
-to indicate that a user invited to a Parent entity in an admin role can manage the parent entity, but a user 
+that a user must be invited into for a specific entity in order to perform the specified action.  For example,
+to indicate that a user invited to a Parent entity in an admin role can manage the parent entity, but a user
 invited to a staff role can only read the parent entity, in your `ability.rb` file:
 
 ```
@@ -250,7 +250,7 @@ cannot :edit, Parent, roles: [:consultant]
 ```
 
 ### Wildcard Roles
-Often is is neccessary to indicate that a user invited in any role has a given permission.  For example, to 
+Often is is neccessary to indicate that a user invited in any role has a given permission.  For example, to
 indicate that any user invited to a Parent entity can view that Parent, regardless of their role:
 
 ```
@@ -262,13 +262,13 @@ can :view, Parent, roles: [:*]
 To specify system roles for a given ability, utilize the `system_roles` method inside a `roles:` array:
 
 ```
-can :manage, contract, roles: [system_roles(:contract_manager, :sales_manager)]
+can :manage, contract, roles: [system_roles([:contract_manager, :sales_manager])]
 ```
 
 
 ### Invitation to a parent (or other attribute)
 To idenfitify abilities based upon invitations to a parent entity or other attribute, Invitational provides an
-```attribute_roles``` method.  The first argument is symbol indicating the attribute name of the parent entity, 
+```attribute_roles``` method.  The first argument is symbol indicating the attribute name of the parent entity,
 the second is an array of roles in which the user must be invited to the parent entity:
 
 ```
