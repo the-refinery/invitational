@@ -80,7 +80,7 @@ module Invitational
 
     def setup_hash
       self.date_sent = DateTime.now
-      self.claim_hash = Digest::SHA1.hexdigest(email + date_sent.to_s)
+      self.claim_hash = SecureRandom.alphanumeric(40)
     end
 
     def standard_role?
