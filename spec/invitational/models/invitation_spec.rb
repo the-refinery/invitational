@@ -27,6 +27,15 @@ describe Invitational::Invitation do
       Then {new_invite.claim_hash.should_not be_nil}
       And  {new_invite.date_sent.should_not be_nil}
     end
+
+    context "Generates Claim hash that is not predictable" do
+      Given(:first_invite) {Invitation.new(email: "test999@d-i.co", invitable: entity1, role: :user)}
+      Given(:second_invite) {Invitation.new(email: "test999@d-i.co", invitable: entity2, role: :user)}
+
+      When {first_invite.save && second_invite.save}
+
+      Then {first_invite.claim_hash != second_invite.claim_hash}
+    end
   end
 
   context "Role Title" do
