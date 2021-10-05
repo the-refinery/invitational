@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    invitational (1.5.0)
+    invitational (1.5.1)
       cancancan (~> 2.0)
       rails (> 4.0)
 
