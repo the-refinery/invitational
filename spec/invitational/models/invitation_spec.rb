@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'invitational/services/service_helper'
 
-describe Invitational::Invitation do
+describe Invitation do
   Given {no_invitations_exist}
 
   Given(:user1) { setup_user "test1@d-i.co" }

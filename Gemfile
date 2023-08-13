@@ -23,4 +23,6 @@ group :test do
   gem 'activerecord'
   gem 'actionpack' # action_controller, action_view
   gem 'sprockets'
+  gem 'sprockets-rails'
+  gem 'byebug'
 end
