@@ -3,3 +3,4 @@ log/*.log
 pkg/
 spec/internal/db/*.sqlite*
 spec/internal/log/*.log
+.byebug_history
