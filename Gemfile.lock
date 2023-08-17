@@ -3,6 +3,7 @@ PATH
   specs:
     invitational (1.5.2)
       cancancan (~> 2.0)
+      i18n (= 1.8.5)
       rails (> 4.0)
 
 GEM
@@ -100,7 +101,7 @@ GEM
       sorcerer (>= 0.3.7)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    i18n (1.14.1)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     jquery-rails (4.6.0)
       rails-dom-testing (>= 1, < 3)
