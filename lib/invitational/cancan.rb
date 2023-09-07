@@ -11,7 +11,7 @@ module Invitational
           block ||= setup_role_based_block_for roles, subject, action, false
         end
 
-        add_rule ::CanCan::Rule.new(true, action, subject, conditions, block)
+        add_rule ::CanCan::Rule.new(true, action, subject, conditions, &block)
       end
 
       def cannot(action = nil, subject = nil, conditions = nil, &block)
@@ -22,7 +22,7 @@ module Invitational
           block ||= setup_role_based_block_for roles, subject, action, true
         end
 
-        add_rule ::CanCan::Rule.new(false, action, subject, conditions, block)
+        add_rule ::CanCan::Rule.new(false, action, subject, conditions, &block)
       end
 
       def setup_role_based_block_for roles, subject, action, role_specific
